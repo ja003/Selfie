@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,15 @@ namespace Selfie1
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			imgInput = new Image<Bgr, byte>("D:\\Coding\\C#\\Selfie\\Selfie1\\test_imgs\\IMG_20211113_150047_resize_1920.jpg");
+			const string img_folder = "D:\\Coding\\C#\\Selfie\\Selfie1\\test_imgs\\";
+			string filename = "IMG_20211113_150047_resize_1920.jpg";
+			filename = "IMG_20190610_104519.jpg";
+			filename = "_0000_IMG_20171101_091405.jpg";
+			imgInput = new Image<Bgr, byte>(img_folder + filename);
+			double scale = 1920f / imgInput.Width;
+			imgInput = imgInput.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
+
+
 			pictureBox1.Image = imgInput.AsBitmap();
 
 			//DetectFaceHaar();
@@ -67,18 +76,23 @@ namespace Selfie1
 				CascadeClassifier classifier = new CascadeClassifier(facePath);
 				var imgGray = imgInput.Convert<Gray, byte>().Clone();
 
+				//_0000_IMG_20171101_091405 - 180x80
 				Size averageEyeSize = new Size(200, 150);
-				Size minEyeSize = new Size(150, 100);
+				Size minEyeSize = new Size(150, 70);
 				Size maxEyeSize = new Size(250, 200);
 				var eyes = classifier.DetectMultiScale(imgGray, 1.1, 3, minEyeSize, maxEyeSize);
 
 				if(eyes.Length != 2)
 				{
-					throw new Exception("invalid eyes count detected");
+					Debug.WriteLine("invalid eyes count detected - " + eyes.Length);
 				}
 
-				Point eye1 = DetectPupil(imgGray, eyes[0], 0);
-				Point eye2 = DetectPupil(imgGray, eyes[1], 1);
+				Point eye1;
+				Point eye2;
+				if(eyes.Length >= 1)
+					 eye1 = DetectPupil(imgGray, eyes[0], 0);
+				if(eyes.Length >= 2)
+					eye2 = DetectPupil(imgGray, eyes[1], 1);
 
 				pictureBox1.Image = imgInput.AsBitmap();
 
