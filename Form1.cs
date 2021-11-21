@@ -98,8 +98,25 @@ namespace Selfie1
 			pSourceImg.ROI = pEye;
 			Image<Gray, byte> eyeImg = pSourceImg.Copy();
 
-			PictureBox pictureBox = pEyeIndex == 0 ? pictureBoxEye1 : pictureBoxEye2;
-			pictureBox.Image = eyeImg.AsBitmap();
+
+			PictureBox pictureBoxEye = pEyeIndex == 0 ? pictureBoxEye1 : pictureBoxEye2;
+			pictureBoxEye.Image = eyeImg.AsBitmap();
+
+			eyeImg.ca
+
+			var circles = eyeImg.HoughCircles(new Gray(50), new Gray(50), 2, 1, 15, 25);
+
+			var pupil = eyeImg.Copy();
+			foreach(var circle in circles) {
+				pupil.Draw(circle[0], new Gray(255));
+				Console.WriteLine(circle[0].Center.X);
+			}
+
+
+			//var pupil = eyeImg.ThresholdToZeroInv(new Gray(40));
+			PictureBox pictureBoxEye_a = pEyeIndex == 0 ? pictureBoxEye1_a : pictureBoxEye2_a;
+			pictureBoxEye_a.Image = pupil.AsBitmap();
+
 
 			return new Point();
 		}

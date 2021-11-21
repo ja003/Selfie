@@ -36,10 +36,14 @@ namespace Selfie1
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.pictureBoxEye1 = new System.Windows.Forms.PictureBox();
 			this.pictureBoxEye2 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxEye2_a = new System.Windows.Forms.PictureBox();
+			this.pictureBoxEye1_a = new System.Windows.Forms.PictureBox();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2_a)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1_a)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -102,11 +106,31 @@ namespace Selfie1
 			this.pictureBoxEye2.TabIndex = 3;
 			this.pictureBoxEye2.TabStop = false;
 			// 
+			// pictureBoxEye2_a
+			// 
+			this.pictureBoxEye2_a.Location = new System.Drawing.Point(239, 550);
+			this.pictureBoxEye2_a.Name = "pictureBoxEye2_a";
+			this.pictureBoxEye2_a.Size = new System.Drawing.Size(208, 106);
+			this.pictureBoxEye2_a.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBoxEye2_a.TabIndex = 5;
+			this.pictureBoxEye2_a.TabStop = false;
+			// 
+			// pictureBoxEye1_a
+			// 
+			this.pictureBoxEye1_a.Location = new System.Drawing.Point(13, 550);
+			this.pictureBoxEye1_a.Name = "pictureBoxEye1_a";
+			this.pictureBoxEye1_a.Size = new System.Drawing.Size(208, 106);
+			this.pictureBoxEye1_a.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBoxEye1_a.TabIndex = 4;
+			this.pictureBoxEye1_a.TabStop = false;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(734, 650);
+			this.ClientSize = new System.Drawing.Size(734, 773);
+			this.Controls.Add(this.pictureBoxEye2_a);
+			this.Controls.Add(this.pictureBoxEye1_a);
 			this.Controls.Add(this.pictureBoxEye2);
 			this.Controls.Add(this.pictureBoxEye1);
 			this.Controls.Add(this.pictureBox1);
@@ -120,6 +144,8 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2_a)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1_a)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -134,6 +160,8 @@ namespace Selfie1
 		private System.Windows.Forms.ToolStripMenuItem detectToolStripMenuItem;
 		private System.Windows.Forms.PictureBox pictureBoxEye1;
 		private System.Windows.Forms.PictureBox pictureBoxEye2;
+		private System.Windows.Forms.PictureBox pictureBoxEye2_a;
+		private System.Windows.Forms.PictureBox pictureBoxEye1_a;
 	}
 }
 
