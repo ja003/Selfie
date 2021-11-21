@@ -66,25 +66,42 @@ namespace Selfie1
 				string facePath = Path.GetFullPath(@"../../../haar_data/haarcascade_eye.xml");
 				CascadeClassifier classifier = new CascadeClassifier(facePath);
 				var imgGray = imgInput.Convert<Gray, byte>().Clone();
+
 				Size averageEyeSize = new Size(200, 150);
 				Size minEyeSize = new Size(150, 100);
 				Size maxEyeSize = new Size(250, 200);
 				var eyes = classifier.DetectMultiScale(imgGray, 1.1,3, minEyeSize, maxEyeSize);
-				foreach(var eye in eyes)
+
+				if(eyes.Length != 2)
 				{
-					imgInput.Draw(eye, new Bgr(0, 0, 255), 4);
-					Cross2DF eyeCenter = new Cross2DF(new PointF(eye.X + eye.Width/2, eye.Y+eye.Height/2), 20,20);
-					imgInput.Draw(eyeCenter, new Bgr(255, 0, 0), 4);
+					throw new Exception("invalid eyes count detected");
 				}
 
-				Bitmap bitmap = imgInput.AsBitmap();
-				bitmap.SetResolution(pictureBox1.Width, pictureBox1.Height);
-				pictureBox1.Image = bitmap;
+				Point eye1 = DetectPupil(imgGray, eyes[0], 0);
+				Point eye2 = DetectPupil(imgGray, eyes[1], 1);
+
+				pictureBox1.Image = imgInput.AsBitmap();
+
 			}
 			catch(Exception ex)
 			{
 				throw new Exception(ex.Message);
 			}
+		}
+
+		private Point DetectPupil(Image<Gray, byte> pSourceImg, Rectangle pEye, int pEyeIndex)
+		{
+			imgInput.Draw(pEye, new Bgr(0, 0, 255), 4);
+			Cross2DF eyeCenter = new Cross2DF(new PointF(pEye.X + pEye.Width / 2, pEye.Y + pEye.Height / 2), 20, 20);
+			imgInput.Draw(eyeCenter, new Bgr(255, 0, 0), 4);
+
+			pSourceImg.ROI = pEye;
+			Image<Gray, byte> eyeImg = pSourceImg.Copy();
+
+			PictureBox pictureBox = pEyeIndex == 0 ? pictureBoxEye1 : pictureBoxEye2;
+			pictureBox.Image = eyeImg.AsBitmap();
+
+			return new Point();
 		}
 
 		public void DetectFaceHaar()
