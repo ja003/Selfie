@@ -40,7 +40,7 @@ namespace Selfie1
 			outputImage = image.CopyBlank();
 			//inputImage = image.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
-			pictureBox_Input.Image = inputImage.Copy().AsBitmap();
+			pictureBox_Input.Image = inputImage.AsBitmap();
 
 			//debug
 			//OnClick_Apply();
@@ -65,22 +65,43 @@ namespace Selfie1
 
 		private void SetInputLeftEye(int uiCoordX, int uiCoordY)
 		{
-			int imageCoordX = ConvertInputUICoordToImage(uiCoordX);
-			int imageCoordY = ConvertInputUICoordToImage(uiCoordY);
+			int imageCoordX = ConvertInputUICoordXToImage(uiCoordX);
+			int imageCoordY = ConvertInputUICoordYToImage(uiCoordY);
 			input_eyeLeft = new PointF(imageCoordX, imageCoordY);
+			RefreshEyeVisuals();
 		}
 
+		
 		private void SetInputRightEye(int uiCoordX, int uiCoordY)
 		{
-			int imageCoordX = ConvertInputUICoordToImage(uiCoordX);
-			int imageCoordY = ConvertInputUICoordToImage(uiCoordY);
+			int imageCoordX = ConvertInputUICoordXToImage(uiCoordX);
+			int imageCoordY = ConvertInputUICoordYToImage(uiCoordY);
 			input_eyeRight = new PointF(imageCoordX, imageCoordY);
+			RefreshEyeVisuals();
 		}
 
-		private int ConvertInputUICoordToImage(int uiCoordValue)
+		private int ConvertInputUICoordXToImage(int uiCoordValue)
 		{
 			return (int)((float)uiCoordValue / pictureBox_Input.Size.Width * inputImage.Size.Width);
 		}
+
+		private int ConvertInputUICoordYToImage(int uiCoordValue)
+		{
+			return (int)((float)uiCoordValue / pictureBox_Input.Size.Height * inputImage.Size.Height);
+		}
+
+		private void RefreshEyeVisuals()
+		{
+			Image<Bgr, byte> inputImageVisual = inputImage.Copy();
+			const int crossSize = 50;
+			const int thickness = 20;
+			Bgr colorLeft = new Bgr(255, 0, 0);
+			Bgr colorRight = new Bgr(255, 255, 0);
+			inputImageVisual.Draw(new Cross2DF(input_eyeLeft, crossSize, crossSize), colorLeft, thickness);
+			inputImageVisual.Draw(new Cross2DF(input_eyeRight, crossSize, crossSize), colorRight, thickness);
+			pictureBox_Input.Image = inputImageVisual.AsBitmap();
+		}
+
 
 		internal void OnClick_Apply()
 		{
