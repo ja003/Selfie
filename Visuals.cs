@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -13,10 +15,26 @@ namespace Selfie1
 		private PictureBox pictureBox_Input;
 		private PictureBox pictureBox_Output;
 
+		Bgr colorLeft = new Bgr(255, 0, 0);
+		Bgr colorRight = new Bgr(255, 255, 0);
+
 		public Visuals(PictureBox pictureBox_Input, PictureBox pictureBox_Output)
 		{
 			this.pictureBox_Input = pictureBox_Input;
 			this.pictureBox_Output = pictureBox_Output;
+		}
+
+		public void RefreshEyeVisuals(Image<Bgr, byte> inputImage, PointF eyeLeftPos, PointF eyeRightPos)
+		{
+			Image<Bgr, byte> inputImageVisual = inputImage.Copy();
+			const int crossSize = 50;
+			const int thickness = 20;
+			
+			inputImageVisual.Draw(new Cross2DF(eyeLeftPos, crossSize, crossSize), colorLeft, thickness);
+			inputImageVisual.Draw(new Cross2DF(eyeRightPos, crossSize, crossSize), colorRight, thickness);
+
+
+			SetInputImage(inputImageVisual.AsBitmap());
 		}
 
 		internal void SetInputImage(Bitmap bitmap)

@@ -16,11 +16,11 @@ namespace Selfie1
 		Image<Bgr, byte> inputImage;
 		Image<Bgr, byte> outputImage;
 
-		PointF input_eyeLeft;
-		PointF input_eyeRight;
+		PointF inputEyeLeft;
+		PointF inputEyeRight;
 
-		PointF output_eyeLeft; // 836/1920
-		PointF output_eyeRight; // 1086/1920
+		PointF outputEyeLeft; // 836/1920
+		PointF outputEyeRight; // 1086/1920
 
 		public ManualInput(Visuals visuals)
 		{
@@ -64,8 +64,8 @@ namespace Selfie1
 		{
 			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
 			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
-			input_eyeLeft = new PointF(imageCoordX, imageCoordY);
-			RefreshEyeVisuals();
+			inputEyeLeft = new PointF(imageCoordX, imageCoordY);
+			visuals.RefreshEyeVisuals(inputImage, inputEyeLeft, inputEyeRight);
 		}
 
 		
@@ -73,23 +73,10 @@ namespace Selfie1
 		{
 			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
 			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
-			input_eyeRight = new PointF(imageCoordX, imageCoordY);
-			RefreshEyeVisuals();
+			inputEyeRight = new PointF(imageCoordX, imageCoordY);
+			visuals.RefreshEyeVisuals(inputImage, inputEyeLeft, inputEyeRight);
 		}		
-
-		private void RefreshEyeVisuals()
-		{
-			Image<Bgr, byte> inputImageVisual = inputImage.Copy();
-			const int crossSize = 50;
-			const int thickness = 20;
-			Bgr colorLeft = new Bgr(255, 0, 0);
-			Bgr colorRight = new Bgr(255, 255, 0);
-			inputImageVisual.Draw(new Cross2DF(input_eyeLeft, crossSize, crossSize), colorLeft, thickness);
-			inputImageVisual.Draw(new Cross2DF(input_eyeRight, crossSize, crossSize), colorRight, thickness);
-
-
-			visuals.SetInputImage(inputImageVisual.AsBitmap());
-		}
+			
 
 
 		internal void OnClick_Apply()
@@ -116,8 +103,8 @@ namespace Selfie1
 			int outputLeftX = (int)(836f / 1920 * inputImage.Size.Width);
 			int outputRightX = (int)(1086f / 1920 * inputImage.Size.Width);
 			int outputY = (int)(inputImage.Size.Height / 2);
-			output_eyeLeft = new PointF(outputLeftX, outputY);
-			output_eyeRight = new PointF(outputRightX, outputY);
+			outputEyeLeft = new PointF(outputLeftX, outputY);
+			outputEyeRight = new PointF(outputRightX, outputY);
 
 			ApplyTransform();
 
@@ -126,15 +113,15 @@ namespace Selfie1
 
 		private void ApplyTransform()
 		{
-			PointF thirdPointSrc = input_eyeRight;
+			PointF thirdPointSrc = inputEyeRight;
 			thirdPointSrc.Y += 10; //todo: calculate orthogonal point?
 								   //thirdPointSrc = input_eyeRight;
-			PointF thirdPointDest = output_eyeRight;
+			PointF thirdPointDest = outputEyeRight;
 			thirdPointDest.Y += 10;
 			//thirdPointDest = output_eyeRight;
 
-			PointF[] src = new PointF[] { input_eyeLeft, input_eyeRight, thirdPointSrc };
-			PointF[] dest = new PointF[] { output_eyeLeft, output_eyeRight, thirdPointDest };
+			PointF[] src = new PointF[] { inputEyeLeft, inputEyeRight, thirdPointSrc };
+			PointF[] dest = new PointF[] { outputEyeLeft, outputEyeRight, thirdPointDest };
 
 			//src = new PointF[] { new PointF(0, 0), new PointF(10, 0), new PointF(0, 10) };
 			//const int offset = 200;
