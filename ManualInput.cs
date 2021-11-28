@@ -116,8 +116,10 @@ namespace Selfie1
 			//dest = new PointF[] { new PointF(offset, offset), new PointF(10 + offset, offset), new PointF(offset, 10 + offset) };
 
 			Mat affineMat = CvInvoke.GetAffineTransform(src, dest);
-			CvInvoke.WarpAffine(inputImage, outputImage, affineMat, inputImage.Size);
-			//inputImage = inputImage.WarpAffine(affineMat, Emgu.CV.CvEnum.Inter.Linear, Emgu.CV.CvEnum.Warp.Default, Emgu.CV.CvEnum.BorderType.Default, new Bgr(0, 255, 255));
+			CvInvoke.WarpAffine(inputImage, outputImage, affineMat, inputImage.Size,
+				Emgu.CV.CvEnum.Inter.Linear, Emgu.CV.CvEnum.Warp.Default,
+				Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(255,255,255));
+			
 		}
 
 	}
