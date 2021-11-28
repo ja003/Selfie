@@ -14,6 +14,7 @@ namespace Selfie1
 	class ManualInput
 	{
 		Image<Bgr, byte> inputImage;
+		Image<Bgr, byte> outputImage;
 
 		private PictureBox pictureBox_Input;
 		private PictureBox pictureBox_Output;
@@ -36,24 +37,41 @@ namespace Selfie1
 		{
 			double scale = 1920f / image.Width;
 			inputImage = image;
+			outputImage = image.CopyBlank();
 			//inputImage = image.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
 			pictureBox_Input.Image = inputImage.Copy().AsBitmap();
 
 			//debug
-			OnClick_Apply();
+			//OnClick_Apply();
 		}
 
+		bool isSetingLeft = true;
 		internal void OnClick_Input(MouseEventArgs mouseEventArgs)
 		{
 			Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y} | {pictureBox_Input.Size}");
+
+			if(isSetingLeft)
+			{
+				int testLeftX = (int)((float)mouseEventArgs.X / pictureBox_Input.Size.Width * inputImage.Size.Width);
+				int testLeftY = (int)((float)mouseEventArgs.Y / pictureBox_Input.Size.Height * inputImage.Size.Height);
+				input_eyeLeft = new PointF(testLeftX, testLeftY);
+			}
+			else
+			{
+				int testRightX = (int)((float)mouseEventArgs.X / pictureBox_Input.Size.Width * inputImage.Size.Width);
+				int testRightY = (int)((float)mouseEventArgs.Y / pictureBox_Input.Size.Height * inputImage.Size.Height);
+				input_eyeRight = new PointF(testRightX, testRightY);
+			}
+			isSetingLeft = !isSetingLeft;
+
 		}
 
 		internal void OnClick_Apply()
 		{
 			//debug
 
-
+			/*
 			//_0000_IMG_20171101_091405 - [1784,1125],[2276,1113]/(4160,2340)
 			int testLeftX = 1784;
 			int testLeftY = 1125;
@@ -68,6 +86,7 @@ namespace Selfie1
 
 			input_eyeLeft = new PointF(testLeftX, testLeftY);
 			input_eyeRight = new PointF(testRightX, testRightY);
+			*/
 
 			int outputLeftX = (int)(836f / 1920 * inputImage.Size.Width);
 			int outputRightX = (int)(1086f / 1920 * inputImage.Size.Width);
@@ -77,7 +96,7 @@ namespace Selfie1
 
 			ApplyTransform();
 
-			pictureBox_Output.Image = inputImage.AsBitmap();
+			pictureBox_Output.Image = outputImage.AsBitmap();
 		}
 
 		private void ApplyTransform()
@@ -97,8 +116,8 @@ namespace Selfie1
 			//dest = new PointF[] { new PointF(offset, offset), new PointF(10 + offset, offset), new PointF(offset, 10 + offset) };
 
 			Mat affineMat = CvInvoke.GetAffineTransform(src, dest);
-
-			inputImage = inputImage.WarpAffine(affineMat, Emgu.CV.CvEnum.Inter.Linear, Emgu.CV.CvEnum.Warp.Default, Emgu.CV.CvEnum.BorderType.Default, new Bgr(0, 255, 255));
+			CvInvoke.WarpAffine(inputImage, outputImage, affineMat, inputImage.Size);
+			//inputImage = inputImage.WarpAffine(affineMat, Emgu.CV.CvEnum.Inter.Linear, Emgu.CV.CvEnum.Warp.Default, Emgu.CV.CvEnum.BorderType.Default, new Bgr(0, 255, 255));
 		}
 
 	}
