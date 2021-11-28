@@ -16,22 +16,16 @@ namespace Selfie1
 		Image<Bgr, byte> inputImage;
 		Image<Bgr, byte> outputImage;
 
-		private PictureBox pictureBox_Input;
-		private PictureBox pictureBox_Output;
-
 		PointF input_eyeLeft;
 		PointF input_eyeRight;
 
 		PointF output_eyeLeft; // 836/1920
 		PointF output_eyeRight; // 1086/1920
 
-
-		public ManualInput(PictureBox pictureBox_Input, PictureBox pictureBox_Output)
+		public ManualInput(Visuals visuals)
 		{
-			this.pictureBox_Input = pictureBox_Input;
-			this.pictureBox_Output = pictureBox_Output;
+			this.visuals = visuals;
 		}
-
 
 		internal void SetInput(Image<Bgr, byte> image)
 		{
@@ -40,16 +34,19 @@ namespace Selfie1
 			outputImage = image.CopyBlank();
 			//inputImage = image.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
-			pictureBox_Input.Image = inputImage.AsBitmap();
+			visuals.SetInputImage(inputImage.AsBitmap());
+			//pictureBox_Input.Image = inputImage.AsBitmap();
 
 			//debug
 			//OnClick_Apply();
 		}
 
 		bool isSetingLeft = true;
+		private Visuals visuals;
+
 		internal void OnClick_Input(MouseEventArgs mouseEventArgs)
 		{
-			Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y} | {pictureBox_Input.Size}");
+			Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y}");
 
 			if(isSetingLeft)
 			{
@@ -63,32 +60,22 @@ namespace Selfie1
 
 		}
 
-		private void SetInputLeftEye(int uiCoordX, int uiCoordY)
+		private void SetInputLeftEye(int inputPictureCoordX, int inputPictureCoordY)
 		{
-			int imageCoordX = ConvertInputUICoordXToImage(uiCoordX);
-			int imageCoordY = ConvertInputUICoordYToImage(uiCoordY);
+			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
+			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
 			input_eyeLeft = new PointF(imageCoordX, imageCoordY);
 			RefreshEyeVisuals();
 		}
 
 		
-		private void SetInputRightEye(int uiCoordX, int uiCoordY)
+		private void SetInputRightEye(int inputPictureCoordX, int inputPictureCoordY)
 		{
-			int imageCoordX = ConvertInputUICoordXToImage(uiCoordX);
-			int imageCoordY = ConvertInputUICoordYToImage(uiCoordY);
+			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
+			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
 			input_eyeRight = new PointF(imageCoordX, imageCoordY);
 			RefreshEyeVisuals();
-		}
-
-		private int ConvertInputUICoordXToImage(int uiCoordValue)
-		{
-			return (int)((float)uiCoordValue / pictureBox_Input.Size.Width * inputImage.Size.Width);
-		}
-
-		private int ConvertInputUICoordYToImage(int uiCoordValue)
-		{
-			return (int)((float)uiCoordValue / pictureBox_Input.Size.Height * inputImage.Size.Height);
-		}
+		}		
 
 		private void RefreshEyeVisuals()
 		{
@@ -99,7 +86,9 @@ namespace Selfie1
 			Bgr colorRight = new Bgr(255, 255, 0);
 			inputImageVisual.Draw(new Cross2DF(input_eyeLeft, crossSize, crossSize), colorLeft, thickness);
 			inputImageVisual.Draw(new Cross2DF(input_eyeRight, crossSize, crossSize), colorRight, thickness);
-			pictureBox_Input.Image = inputImageVisual.AsBitmap();
+
+
+			visuals.SetInputImage(inputImageVisual.AsBitmap());
 		}
 
 
@@ -132,7 +121,7 @@ namespace Selfie1
 
 			ApplyTransform();
 
-			pictureBox_Output.Image = outputImage.AsBitmap();
+			visuals.SetOutputImage(outputImage.AsBitmap());
 		}
 
 		private void ApplyTransform()
