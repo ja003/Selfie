@@ -52,6 +52,11 @@ namespace Selfie1
 			return (int)((float)pictureCoordY / pictureBox_Input.Size.Height* pictureBox_Input.Image.Size.Height);
 		}
 
+		internal bool IsOnInputPictureLeftSide(int x)
+		{
+			return x < pictureBox_Input.Size.Width / 2;
+		}
+
 		internal void SetOutputImage(Bitmap bitmap)
 		{
 			pictureBox_Output.Image = bitmap;

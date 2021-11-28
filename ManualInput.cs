@@ -49,13 +49,14 @@ namespace Selfie1
 			outputEyeRight = new PointF(outputRightX, outputY);
 		}
 
-		bool isSetingLeft = true;
+		//bool isSetingLeft = true;
 		private Visuals visuals;
 
 		internal void OnClick_Input(MouseEventArgs mouseEventArgs)
 		{
 			Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y}");
 
+			bool isSetingLeft = visuals.IsOnInputPictureLeftSide(mouseEventArgs.X);
 			if(isSetingLeft)
 			{
 				SetInputLeftEye(mouseEventArgs.X, mouseEventArgs.Y);
@@ -64,7 +65,7 @@ namespace Selfie1
 			{
 				SetInputRightEye(mouseEventArgs.X, mouseEventArgs.Y);
 			}
-			isSetingLeft = !isSetingLeft;
+			//isSetingLeft = !isSetingLeft;
 
 		}
 
