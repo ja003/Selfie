@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,10 @@ namespace Selfie1
 		private ManualInput manualInput;
 		EncoderParameters encoderParams;
 		ImageCodecInfo jpegCodec;
+
+		string outputPath = "D:\\Coding\\C#\\Selfie\\output\\";
+
+
 		public SaveLoad(ManualInput manualInput)
 		{
 			this.manualInput = manualInput;
@@ -49,9 +54,25 @@ namespace Selfie1
 				Debug.WriteLine("no jpeg codec");
 				return;
 			}
-			string path = "D:\\Coding\\C#\\Selfie\\output\\";
+			if(!Directory.Exists(outputPath))
+			{
+				Debug.WriteLine($"path {outputPath} does not exist");
+				return;
+			}
+
 			string fileName = manualInput.InputImageFile.Name; //includes .jpg
-			manualInput.GetOutputBitmap().Save(path + fileName, jpegCodec, encoderParams);
+			string outputFileFullName = Path.Combine(outputPath, fileName);
+			manualInput.GetOutputBitmap().Save(outputFileFullName, jpegCodec, encoderParams);
+		}
+
+		internal void SetOutputFolder(string path)
+		{
+			if(!Directory.Exists(path))
+			{
+				Debug.WriteLine($"path {path} does not exist");
+				return;
+			}
+			outputPath = path;
 		}
 	}
 }

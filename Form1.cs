@@ -101,5 +101,14 @@ namespace Selfie1
 		{
 			saveLoad.Save();
 		}
+
+		private void saveToFolderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			if(dialog.ShowDialog() == DialogResult.OK)
+			{
+				saveLoad.SetOutputFolder(dialog.SelectedPath);
+			}
+		}
 	}
 }
