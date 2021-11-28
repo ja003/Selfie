@@ -176,5 +176,11 @@ namespace Selfie1
 				throw new Exception(ex.Message);
 			}
 		}
+
+		private void pictureBox1_Click(object sender, EventArgs e)
+		{
+			var mouseEventArgs = e as MouseEventArgs;
+			if(mouseEventArgs != null) Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y} | {pictureBox1.Size}" );
+		}
 	}
 }
