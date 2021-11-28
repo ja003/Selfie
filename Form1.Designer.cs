@@ -169,6 +169,7 @@ namespace Selfie1
 			this.Controls.Add(this.pictureBoxEye2);
 			this.Controls.Add(this.pictureBoxEye1);
 			this.Controls.Add(this.pictureBox_Input);
+			this.KeyPreview = true;
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.Load += new System.EventHandler(this.Form1_Load);

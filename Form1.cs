@@ -30,6 +30,19 @@ namespace Selfie1
 			visuals = new Visuals(pictureBox_Input, pictureBox_Output);
 
 			manualInput = new ManualInput(visuals);
+
+			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
+		}
+
+		private void Form1_KeyDown(object sender, KeyEventArgs e)
+		{
+			Debug.WriteLine(e.KeyCode);
+			switch(e.KeyCode)
+			{
+				case Keys.Space:
+					manualInput.Apply();
+					break;
+			}
 		}
 
 		private void Form1_Load(object sender, EventArgs e)

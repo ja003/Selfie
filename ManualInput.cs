@@ -25,6 +25,8 @@ namespace Selfie1
 		public ManualInput(Visuals visuals)
 		{
 			this.visuals = visuals;
+
+			
 		}
 
 		internal void SetInput(Image<Bgr, byte> image)
@@ -39,6 +41,12 @@ namespace Selfie1
 
 			//debug
 			//OnClick_Apply();
+
+			int outputLeftX = (int)(836f / 1920 * inputImage.Size.Width);
+			int outputRightX = (int)(1086f / 1920 * inputImage.Size.Width);
+			int outputY = (int)(inputImage.Size.Height / 2);
+			outputEyeLeft = new PointF(outputLeftX, outputY);
+			outputEyeRight = new PointF(outputRightX, outputY);
 		}
 
 		bool isSetingLeft = true;
@@ -100,12 +108,12 @@ namespace Selfie1
 			input_eyeRight = new PointF(testRightX, testRightY);
 			*/
 
-			int outputLeftX = (int)(836f / 1920 * inputImage.Size.Width);
-			int outputRightX = (int)(1086f / 1920 * inputImage.Size.Width);
-			int outputY = (int)(inputImage.Size.Height / 2);
-			outputEyeLeft = new PointF(outputLeftX, outputY);
-			outputEyeRight = new PointF(outputRightX, outputY);
+			
+			Apply();
+		}
 
+		public void Apply()
+		{
 			ApplyTransform();
 
 			visuals.SetOutputImage(outputImage.AsBitmap());
