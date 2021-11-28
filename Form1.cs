@@ -55,6 +55,7 @@ namespace Selfie1
 			filename = "IMG_20190610_104519.jpg"; //[1784,1125]/(4160,2340)
 
 			filename = "_0000_IMG_20171101_091405.jpg";
+			filename = "IMG_20210413_222434.jpg";
 
 			FileInfo file = new FileInfo(img_folder + filename);
 

@@ -34,6 +34,7 @@ namespace Selfie1
 			
 			inputImageVisual.Draw(new Cross2DF(eyeLeftPos, crossSize, crossSize), colorLeft, thickness);
 			inputImageVisual.Draw(new Cross2DF(eyeRightPos, crossSize, crossSize), colorRight, thickness);
+			inputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(eyeLeftPos, eyeRightPos), crossSize, crossSize), colorRight, thickness);
 
 
 			SetInputImage(inputImageVisual.AsBitmap());
@@ -62,6 +63,19 @@ namespace Selfie1
 		internal void SetOutputImage(Bitmap bitmap)
 		{
 			pictureBox_Output.Image = bitmap;
+		}
+
+		internal void debug_ShowOutputEyes(Image<Bgr, byte> outputImage, PointF outputEyeLeft, PointF outputEyeRight)
+		{
+			Image<Bgr, byte> outputImageVisual = outputImage.Copy();
+			const int crossSize = 50;
+			const int thickness = 20;
+
+			outputImageVisual.Draw(new Cross2DF(outputEyeLeft, crossSize, crossSize), colorLeft, thickness);
+			outputImageVisual.Draw(new Cross2DF(outputEyeRight, crossSize, crossSize), colorRight, thickness);
+			outputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(outputEyeLeft, outputEyeRight), crossSize, crossSize), colorRight, thickness);
+
+			SetOutputImage(outputImageVisual.AsBitmap());
 		}
 	}
 }
