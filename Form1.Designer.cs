@@ -42,10 +42,10 @@ namespace Selfie1
 			this.button_Apply = new System.Windows.Forms.Button();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.folderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.button_Save = new System.Windows.Forms.Button();
-			this.saveToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.folderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.button_Save = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2)).BeginInit();
@@ -181,11 +181,25 @@ namespace Selfie1
 			this.openToolStripMenuItem.Text = "Load - File";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem1_Click);
 			// 
+			// loadFileToolStripMenuItem
+			// 
+			this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
+			this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+			this.loadFileToolStripMenuItem.Text = "Load file";
+			// 
 			// folderToolStripMenuItem1
 			// 
 			this.folderToolStripMenuItem1.Name = "folderToolStripMenuItem1";
 			this.folderToolStripMenuItem1.Size = new System.Drawing.Size(89, 20);
 			this.folderToolStripMenuItem1.Text = "Load - Folder";
+			this.folderToolStripMenuItem1.Click += new System.EventHandler(this.folderToolStripMenuItem1_Click);
+			// 
+			// saveToFolderToolStripMenuItem
+			// 
+			this.saveToFolderToolStripMenuItem.Name = "saveToFolderToolStripMenuItem";
+			this.saveToFolderToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+			this.saveToFolderToolStripMenuItem.Text = "Save to folder";
+			this.saveToFolderToolStripMenuItem.Click += new System.EventHandler(this.saveToFolderToolStripMenuItem_Click);
 			// 
 			// button_Save
 			// 
@@ -196,19 +210,6 @@ namespace Selfie1
 			this.button_Save.Text = "save";
 			this.button_Save.UseVisualStyleBackColor = true;
 			this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
-			// 
-			// saveToFolderToolStripMenuItem
-			// 
-			this.saveToFolderToolStripMenuItem.Name = "saveToFolderToolStripMenuItem";
-			this.saveToFolderToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
-			this.saveToFolderToolStripMenuItem.Text = "Save to folder";
-			this.saveToFolderToolStripMenuItem.Click += new System.EventHandler(this.saveToFolderToolStripMenuItem_Click);
-			// 
-			// loadFileToolStripMenuItem
-			// 
-			this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
-			this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-			this.loadFileToolStripMenuItem.Text = "Load file";
 			// 
 			// Form1
 			// 

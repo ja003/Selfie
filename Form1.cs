@@ -23,6 +23,7 @@ namespace Selfie1
 		ManualInput manualInput;
 		Visuals visuals;
 		SaveLoad saveLoad;
+		BulkInputManager bulkInput;
 
 		public Form1()
 		{
@@ -31,6 +32,7 @@ namespace Selfie1
 			visuals = new Visuals(pictureBox_Input, pictureBox_Output);
 			manualInput = new ManualInput(visuals);
 			saveLoad = new SaveLoad(manualInput);
+			bulkInput = new BulkInputManager(manualInput);
 
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
@@ -108,6 +110,15 @@ namespace Selfie1
 			if(dialog.ShowDialog() == DialogResult.OK)
 			{
 				saveLoad.SetOutputFolder(dialog.SelectedPath);
+			}
+		}
+
+		private void folderToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			if(dialog.ShowDialog() == DialogResult.OK)
+			{
+				bulkInput.SetInputFolder(dialog.SelectedPath);
 			}
 		}
 	}
