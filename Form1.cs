@@ -22,14 +22,15 @@ namespace Selfie1
 
 		ManualInput manualInput;
 		Visuals visuals;
+		SaveLoad saveLoad;
 
 		public Form1()
 		{
 			InitializeComponent();
 
 			visuals = new Visuals(pictureBox_Input, pictureBox_Output);
-
 			manualInput = new ManualInput(visuals);
+			saveLoad = new SaveLoad(manualInput);
 
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
@@ -51,12 +52,15 @@ namespace Selfie1
 			string filename = "IMG_20211113_150047_resize_1920.jpg";
 			filename = "IMG_20190610_104519.jpg"; //[1784,1125]/(4160,2340)
 
-			filename = "_0000_IMG_20171101_091405.jpg"; 
+			filename = "_0000_IMG_20171101_091405.jpg";
+
+			FileInfo file = new FileInfo(img_folder + filename);
+
 			//imgInput = new Image<Bgr, byte>(img_folder + filename);
 			//double scale = 1920f / imgInput.Width;
 			//imgInput = imgInput.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
-			manualInput.SetInput(new Image<Bgr, byte>(img_folder + filename));
+			manualInput.SetInput(file);
 
 			//pictureBox_Input.Image = imgInput.AsBitmap();
 
@@ -80,6 +84,22 @@ namespace Selfie1
 		private void button_Apply_Click(object sender, EventArgs e)
 		{
 			manualInput.OnClick_Apply();
+		}
+
+
+		private void fileToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			if(dialog.ShowDialog() == DialogResult.OK)
+			{
+				//imgInput = new Image<Bgr, byte>(dialog.FileName);
+				manualInput.SetInput(dialog.FileName);
+			}
+		}
+
+		private void button_Save_Click(object sender, EventArgs e)
+		{
+			saveLoad.Save();
 		}
 	}
 }
