@@ -39,6 +39,7 @@ namespace Selfie1
 			this.pictureBoxEye2_c = new System.Windows.Forms.PictureBox();
 			this.pictureBoxEye1_c = new System.Windows.Forms.PictureBox();
 			this.pictureBox_Output = new System.Windows.Forms.PictureBox();
+			this.button_Apply = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2)).BeginInit();
@@ -142,11 +143,22 @@ namespace Selfie1
 			this.pictureBox_Output.TabIndex = 10;
 			this.pictureBox_Output.TabStop = false;
 			// 
+			// button_Apply
+			// 
+			this.button_Apply.Location = new System.Drawing.Point(476, 356);
+			this.button_Apply.Name = "button_Apply";
+			this.button_Apply.Size = new System.Drawing.Size(117, 71);
+			this.button_Apply.TabIndex = 11;
+			this.button_Apply.Text = "apply";
+			this.button_Apply.UseVisualStyleBackColor = true;
+			this.button_Apply.Click += new System.EventHandler(this.button_Apply_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(994, 862);
+			this.Controls.Add(this.button_Apply);
 			this.Controls.Add(this.pictureBox_Output);
 			this.Controls.Add(this.pictureBoxEye2_c);
 			this.Controls.Add(this.pictureBoxEye1_c);
@@ -185,6 +197,7 @@ namespace Selfie1
 		private System.Windows.Forms.PictureBox pictureBoxEye2_c;
 		private System.Windows.Forms.PictureBox pictureBoxEye1_c;
 		private System.Windows.Forms.PictureBox pictureBox_Output;
+		private System.Windows.Forms.Button button_Apply;
 	}
 }
 

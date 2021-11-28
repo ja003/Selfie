@@ -20,9 +20,13 @@ namespace Selfie1
 	{
 		Image<Bgr, byte> imgInput;
 
+		ManualInput manualInput;
+
 		public Form1()
 		{
 			InitializeComponent();
+
+			manualInput = new ManualInput(pictureBox_Input, pictureBox_Output);
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -31,12 +35,13 @@ namespace Selfie1
 			string filename = "IMG_20211113_150047_resize_1920.jpg";
 			filename = "IMG_20190610_104519.jpg";
 			filename = "_0000_IMG_20171101_091405.jpg";
-			imgInput = new Image<Bgr, byte>(img_folder + filename);
-			double scale = 1920f / imgInput.Width;
-			imgInput = imgInput.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
+			//imgInput = new Image<Bgr, byte>(img_folder + filename);
+			//double scale = 1920f / imgInput.Width;
+			//imgInput = imgInput.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
+			manualInput.SetInput(new Image<Bgr, byte>(img_folder + filename));
 
-			pictureBox_Input.Image = imgInput.AsBitmap();
+			//pictureBox_Input.Image = imgInput.AsBitmap();
 
 			//disable for now -> first implement manual
 			//DetectFaceHaar();
@@ -49,7 +54,15 @@ namespace Selfie1
 		private void pictureBox_Input_Click(object sender, EventArgs e)
 		{
 			var mouseEventArgs = e as MouseEventArgs;
-			if(mouseEventArgs != null) Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y} | {pictureBox_Input.Size}" );
+			if(mouseEventArgs != null)
+				manualInput.OnClick_Input(mouseEventArgs);
+			else
+				Debug.WriteLine("Invalid input");
+		}
+
+		private void button_Apply_Click(object sender, EventArgs e)
+		{
+			manualInput.OnClick_Apply();
 		}
 	}
 }
