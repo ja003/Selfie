@@ -35,9 +35,10 @@ namespace Selfie1
 		internal void SetInput(Image<Bgr, byte> image)
 		{
 			double scale = 1920f / image.Width;
-			inputImage = image.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
+			inputImage = image;
+			//inputImage = image.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
-			pictureBox_Input.Image = inputImage.AsBitmap();
+			pictureBox_Input.Image = inputImage.Copy().AsBitmap();
 
 			//debug
 			OnClick_Apply();
@@ -51,12 +52,26 @@ namespace Selfie1
 		internal void OnClick_Apply()
 		{
 			//debug
-			input_eyeLeft = new PointF(186, 138);
-			input_eyeRight = new PointF(247, 139);
 
-			int outputLeftX = (int)(836f / 1920 * pictureBox_Output.Size.Width);
-			int outputRightX = (int)(1086f / 1920 * pictureBox_Output.Size.Width);
-			int outputY = pictureBox_Output.Size.Height / 2;
+
+			//_0000_IMG_20171101_091405 - [1784,1125],[2276,1113]/(4160,2340)
+			int testLeftX = 1784;
+			int testLeftY = 1125;
+			int testRightX = 2276;
+			int testRightY = 1113;
+
+			//_0000_IMG_20171101_091405 
+			testLeftX = (int)(186f / pictureBox_Input.Size.Width * inputImage.Size.Width);
+			testLeftY = (int)(138f / pictureBox_Input.Size.Height * inputImage.Size.Height);
+			testRightX = (int)(247f / pictureBox_Input.Size.Width * inputImage.Size.Width);
+			testRightY = (int)(139f / pictureBox_Input.Size.Height * inputImage.Size.Height);
+
+			input_eyeLeft = new PointF(testLeftX, testLeftY);
+			input_eyeRight = new PointF(testRightX, testRightY);
+
+			int outputLeftX = (int)(836f / 1920 * inputImage.Size.Width);
+			int outputRightX = (int)(1086f / 1920 * inputImage.Size.Width);
+			int outputY = (int)(inputImage.Size.Height / 2);
 			output_eyeLeft = new PointF(outputLeftX, outputY);
 			output_eyeRight = new PointF(outputRightX, outputY);
 
@@ -67,11 +82,23 @@ namespace Selfie1
 
 		private void ApplyTransform()
 		{
-			PointF[] src = new PointF[] { input_eyeLeft, input_eyeRight, input_eyeRight };
-			PointF[] dest = new PointF[] { output_eyeLeft, output_eyeRight, output_eyeRight };
+			PointF thirdPointSrc = input_eyeRight;
+			thirdPointSrc.Y += 10; //todo: calculate orthogonal point?
+			//thirdPointSrc = input_eyeRight;
+			PointF thirdPointDest = output_eyeRight;
+			thirdPointDest.Y += 10;
+			//thirdPointDest = output_eyeRight;
+
+			PointF[] src = new PointF[] { input_eyeLeft, input_eyeRight, thirdPointSrc };
+			PointF[] dest = new PointF[] { output_eyeLeft, output_eyeRight, thirdPointDest };
+
+			//src = new PointF[] { new PointF(0, 0), new PointF(10, 0), new PointF(0, 10) };
+			//const int offset = 200;
+			//dest = new PointF[] { new PointF(offset, offset), new PointF(10 + offset, offset), new PointF(offset, 10 + offset) };
+
 			Mat affineMat = CvInvoke.GetAffineTransform(src, dest);
 
-			inputImage.WarpAffine(affineMat, Emgu.CV.CvEnum.Inter.Linear, Emgu.CV.CvEnum.Warp.Default, Emgu.CV.CvEnum.BorderType.Default, new Bgr(255, 255, 255));
+			inputImage = inputImage.WarpAffine(affineMat, Emgu.CV.CvEnum.Inter.Linear, Emgu.CV.CvEnum.Warp.Default, Emgu.CV.CvEnum.BorderType.Default, new Bgr(0, 255, 255));
 		}
 
 	}

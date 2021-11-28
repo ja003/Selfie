@@ -33,8 +33,9 @@ namespace Selfie1
 		{
 			const string img_folder = "D:\\Coding\\C#\\Selfie\\Selfie1\\test_imgs\\";
 			string filename = "IMG_20211113_150047_resize_1920.jpg";
-			filename = "IMG_20190610_104519.jpg";
-			filename = "_0000_IMG_20171101_091405.jpg";
+			filename = "IMG_20190610_104519.jpg"; //[1784,1125]/(4160,2340)
+
+			filename = "_0000_IMG_20171101_091405.jpg"; 
 			//imgInput = new Image<Bgr, byte>(img_folder + filename);
 			//double scale = 1920f / imgInput.Width;
 			//imgInput = imgInput.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
