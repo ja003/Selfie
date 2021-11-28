@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,15 @@ namespace Selfie1
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			imgInput = new Image<Bgr, byte>("D:\\Coding\\C#\\Selfie\\Selfie1\\test_imgs\\IMG_20211113_150047_resize_1920.jpg");
+			const string img_folder = "D:\\Coding\\C#\\Selfie\\Selfie1\\test_imgs\\";
+			string filename = "IMG_20211113_150047_resize_1920.jpg";
+			filename = "IMG_20190610_104519.jpg";
+			filename = "_0000_IMG_20171101_091405.jpg";
+			imgInput = new Image<Bgr, byte>(img_folder + filename);
+			double scale = 1920f / imgInput.Width;
+			imgInput = imgInput.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
+
+
 			pictureBox1.Image = imgInput.AsBitmap();
 
 			//DetectFaceHaar();
@@ -67,18 +76,23 @@ namespace Selfie1
 				CascadeClassifier classifier = new CascadeClassifier(facePath);
 				var imgGray = imgInput.Convert<Gray, byte>().Clone();
 
+				//_0000_IMG_20171101_091405 - 180x80
 				Size averageEyeSize = new Size(200, 150);
-				Size minEyeSize = new Size(150, 100);
+				Size minEyeSize = new Size(150, 70);
 				Size maxEyeSize = new Size(250, 200);
-				var eyes = classifier.DetectMultiScale(imgGray, 1.1,3, minEyeSize, maxEyeSize);
+				var eyes = classifier.DetectMultiScale(imgGray, 1.1, 3, minEyeSize, maxEyeSize);
 
 				if(eyes.Length != 2)
 				{
-					throw new Exception("invalid eyes count detected");
+					Debug.WriteLine("invalid eyes count detected - " + eyes.Length);
 				}
 
-				Point eye1 = DetectPupil(imgGray, eyes[0], 0);
-				Point eye2 = DetectPupil(imgGray, eyes[1], 1);
+				Point eye1;
+				Point eye2;
+				if(eyes.Length >= 1)
+					 eye1 = DetectPupil(imgGray, eyes[0], 0);
+				if(eyes.Length >= 2)
+					eye2 = DetectPupil(imgGray, eyes[1], 1);
 
 				pictureBox1.Image = imgInput.AsBitmap();
 
@@ -99,23 +113,42 @@ namespace Selfie1
 			Image<Gray, byte> eyeImg = pSourceImg.Copy();
 
 
+			//EYE
 			PictureBox pictureBoxEye = pEyeIndex == 0 ? pictureBoxEye1 : pictureBoxEye2;
 			pictureBoxEye.Image = eyeImg.AsBitmap();
 
-			eyeImg.ca
+			//THRESHOLD
+			var threshold = eyeImg.ThresholdToZeroInv(new Gray(40));
+			PictureBox pictureBoxEye_a = pEyeIndex == 0 ? pictureBoxEye1_a : pictureBoxEye2_a;
+			pictureBoxEye_a.Image = threshold.AsBitmap();
 
-			var circles = eyeImg.HoughCircles(new Gray(50), new Gray(50), 2, 1, 15, 25);
+			//CANNY
+			const int cannyThreshold = 30;
+			var canny = threshold.Canny(cannyThreshold, 2);
+			PictureBox pictureBoxEye_b = pEyeIndex == 0 ? pictureBoxEye1_b : pictureBoxEye2_b;
+			pictureBoxEye_b.Image = canny.AsBitmap();
+
+			//HOUGH CIRCLES
+			const int minRadius = 7;
+			const int maxRadius = 12;
+			const int accumulatorThreshold = 25;
+			const int dp = 2;
+			const int minDist = 5;
+			var circlesChannels = threshold.HoughCircles(new Gray(cannyThreshold), new Gray(accumulatorThreshold), dp, minDist, minRadius, maxRadius);
 
 			var pupil = eyeImg.Copy();
-			foreach(var circle in circles) {
-				pupil.Draw(circle[0], new Gray(255));
-				Console.WriteLine(circle[0].Center.X);
+			foreach(var circleChannel in circlesChannels)
+			{
+				foreach(var circle in circleChannel)
+				{
+					pupil.Draw(circle, new Gray(255));
+					Console.WriteLine(circle.Center.X);
+				}
 			}
 
 
-			//var pupil = eyeImg.ThresholdToZeroInv(new Gray(40));
-			PictureBox pictureBoxEye_a = pEyeIndex == 0 ? pictureBoxEye1_a : pictureBoxEye2_a;
-			pictureBoxEye_a.Image = pupil.AsBitmap();
+			PictureBox pictureBoxEye_c = pEyeIndex == 0 ? pictureBoxEye1_c : pictureBoxEye2_c;
+			pictureBoxEye_c.Image = pupil.AsBitmap();
 
 
 			return new Point();
@@ -142,6 +175,12 @@ namespace Selfie1
 			{
 				throw new Exception(ex.Message);
 			}
+		}
+
+		private void pictureBox1_Click(object sender, EventArgs e)
+		{
+			var mouseEventArgs = e as MouseEventArgs;
+			if(mouseEventArgs != null) Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y} | {pictureBox1.Size}" );
 		}
 	}
 }
