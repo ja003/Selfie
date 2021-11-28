@@ -53,18 +53,33 @@ namespace Selfie1
 
 			if(isSetingLeft)
 			{
-				int testLeftX = (int)((float)mouseEventArgs.X / pictureBox_Input.Size.Width * inputImage.Size.Width);
-				int testLeftY = (int)((float)mouseEventArgs.Y / pictureBox_Input.Size.Height * inputImage.Size.Height);
-				input_eyeLeft = new PointF(testLeftX, testLeftY);
+				SetInputLeftEye(mouseEventArgs.X, mouseEventArgs.Y);
 			}
 			else
 			{
-				int testRightX = (int)((float)mouseEventArgs.X / pictureBox_Input.Size.Width * inputImage.Size.Width);
-				int testRightY = (int)((float)mouseEventArgs.Y / pictureBox_Input.Size.Height * inputImage.Size.Height);
-				input_eyeRight = new PointF(testRightX, testRightY);
+				SetInputRightEye(mouseEventArgs.X, mouseEventArgs.Y);
 			}
 			isSetingLeft = !isSetingLeft;
 
+		}
+
+		private void SetInputLeftEye(int uiCoordX, int uiCoordY)
+		{
+			int imageCoordX = ConvertInputUICoordToImage(uiCoordX);
+			int imageCoordY = ConvertInputUICoordToImage(uiCoordY);
+			input_eyeLeft = new PointF(imageCoordX, imageCoordY);
+		}
+
+		private void SetInputRightEye(int uiCoordX, int uiCoordY)
+		{
+			int imageCoordX = ConvertInputUICoordToImage(uiCoordX);
+			int imageCoordY = ConvertInputUICoordToImage(uiCoordY);
+			input_eyeRight = new PointF(imageCoordX, imageCoordY);
+		}
+
+		private int ConvertInputUICoordToImage(int uiCoordValue)
+		{
+			return (int)((float)uiCoordValue / pictureBox_Input.Size.Width * inputImage.Size.Width);
 		}
 
 		internal void OnClick_Apply()
@@ -103,7 +118,7 @@ namespace Selfie1
 		{
 			PointF thirdPointSrc = input_eyeRight;
 			thirdPointSrc.Y += 10; //todo: calculate orthogonal point?
-			//thirdPointSrc = input_eyeRight;
+								   //thirdPointSrc = input_eyeRight;
 			PointF thirdPointDest = output_eyeRight;
 			thirdPointDest.Y += 10;
 			//thirdPointDest = output_eyeRight;
@@ -118,8 +133,8 @@ namespace Selfie1
 			Mat affineMat = CvInvoke.GetAffineTransform(src, dest);
 			CvInvoke.WarpAffine(inputImage, outputImage, affineMat, inputImage.Size,
 				Emgu.CV.CvEnum.Inter.Linear, Emgu.CV.CvEnum.Warp.Default,
-				Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(255,255,255));
-			
+				Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(255, 255, 255));
+
 		}
 
 	}
