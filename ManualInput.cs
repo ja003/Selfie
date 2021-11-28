@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Selfie1
 	{
 		Image<Bgr, byte> inputImage;
 		Image<Bgr, byte> outputImage;
+		public FileInfo InputImageFile { get; private set; }
 
 		PointF inputEyeLeft;
 		PointF inputEyeRight;
@@ -29,11 +31,24 @@ namespace Selfie1
 			
 		}
 
-		internal void SetInput(Image<Bgr, byte> image)
+		internal Bitmap GetOutputBitmap()
 		{
-			double scale = 1920f / image.Width;
+			return outputImage.AsBitmap();
+		}
+
+		//internal void SetInput(Image<Bgr, byte> image, string fileName)
+		internal void SetInput(string filePath)
+		{
+			SetInput(new FileInfo(filePath));
+		}
+		internal void SetInput(FileInfo file)
+		{
+			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
+
+			//double scale = 1920f / image.Width;
 			inputImage = image;
 			outputImage = image.CopyBlank();
+			InputImageFile = file;
 			//inputImage = image.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
 			visuals.SetInputImage(inputImage.AsBitmap());
@@ -48,6 +63,7 @@ namespace Selfie1
 			outputEyeLeft = new PointF(outputLeftX, outputY);
 			outputEyeRight = new PointF(outputRightX, outputY);
 		}
+
 
 		//bool isSetingLeft = true;
 		private Visuals visuals;

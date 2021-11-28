@@ -15,6 +15,8 @@ namespace Selfie1
 		private PictureBox pictureBox_Input;
 		private PictureBox pictureBox_Output;
 
+		
+
 		Bgr colorLeft = new Bgr(255, 0, 0);
 		Bgr colorRight = new Bgr(255, 255, 0);
 

@@ -40,6 +40,12 @@ namespace Selfie1
 			this.pictureBoxEye1_c = new System.Windows.Forms.PictureBox();
 			this.pictureBox_Output = new System.Windows.Forms.PictureBox();
 			this.button_Apply = new System.Windows.Forms.Button();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.folderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.button_Save = new System.Windows.Forms.Button();
+			this.saveToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2)).BeginInit();
@@ -50,6 +56,7 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2_c)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1_c)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).BeginInit();
+			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pictureBox_Input
@@ -153,11 +160,62 @@ namespace Selfie1
 			this.button_Apply.UseVisualStyleBackColor = true;
 			this.button_Apply.Click += new System.EventHandler(this.button_Apply_Click);
 			// 
+			// menuStrip1
+			// 
+			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.folderToolStripMenuItem1,
+            this.saveToFolderToolStripMenuItem});
+			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.Size = new System.Drawing.Size(994, 24);
+			this.menuStrip1.TabIndex = 12;
+			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadFileToolStripMenuItem});
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
+			this.openToolStripMenuItem.Text = "Load - File";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem1_Click);
+			// 
+			// folderToolStripMenuItem1
+			// 
+			this.folderToolStripMenuItem1.Name = "folderToolStripMenuItem1";
+			this.folderToolStripMenuItem1.Size = new System.Drawing.Size(89, 20);
+			this.folderToolStripMenuItem1.Text = "Load - Folder";
+			// 
+			// button_Save
+			// 
+			this.button_Save.Location = new System.Drawing.Point(634, 356);
+			this.button_Save.Name = "button_Save";
+			this.button_Save.Size = new System.Drawing.Size(117, 71);
+			this.button_Save.TabIndex = 13;
+			this.button_Save.Text = "save";
+			this.button_Save.UseVisualStyleBackColor = true;
+			this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
+			// 
+			// saveToFolderToolStripMenuItem
+			// 
+			this.saveToFolderToolStripMenuItem.Name = "saveToFolderToolStripMenuItem";
+			this.saveToFolderToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+			this.saveToFolderToolStripMenuItem.Text = "Save to folder";
+			this.saveToFolderToolStripMenuItem.Click += new System.EventHandler(this.saveToFolderToolStripMenuItem_Click);
+			// 
+			// loadFileToolStripMenuItem
+			// 
+			this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
+			this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.loadFileToolStripMenuItem.Text = "Load file";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(994, 862);
+			this.Controls.Add(this.button_Save);
 			this.Controls.Add(this.button_Apply);
 			this.Controls.Add(this.pictureBox_Output);
 			this.Controls.Add(this.pictureBoxEye2_c);
@@ -169,7 +227,9 @@ namespace Selfie1
 			this.Controls.Add(this.pictureBoxEye2);
 			this.Controls.Add(this.pictureBoxEye1);
 			this.Controls.Add(this.pictureBox_Input);
+			this.Controls.Add(this.menuStrip1);
 			this.KeyPreview = true;
+			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.Load += new System.EventHandler(this.Form1_Load);
@@ -183,7 +243,10 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye2_c)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxEye1_c)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).EndInit();
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -199,6 +262,12 @@ namespace Selfie1
 		private System.Windows.Forms.PictureBox pictureBoxEye1_c;
 		private System.Windows.Forms.PictureBox pictureBox_Output;
 		private System.Windows.Forms.Button button_Apply;
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem1;
+		private System.Windows.Forms.Button button_Save;
+		private System.Windows.Forms.ToolStripMenuItem loadFileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToFolderToolStripMenuItem;
 	}
 }
 
