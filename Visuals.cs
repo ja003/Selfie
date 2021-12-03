@@ -90,12 +90,8 @@ namespace Selfie1
 			return x < pictureBox_Input.Size.Width / 2;
 		}
 
-		internal void SetOutputImage(Bitmap bitmap)
-		{
-			pictureBox_Output.Image = bitmap;
-		}
 
-		internal void debug_ShowOutputEyes(Image<Bgr, byte> outputImage, PointF outputEyeLeft, PointF outputEyeRight)
+		internal void SetOuputImage(Image<Bgr, byte> outputImage, PointF outputEyeLeft, PointF outputEyeRight)
 		{
 			Image<Bgr, byte> outputImageVisual = outputImage.Copy();
 			const int crossSize = 50;
@@ -105,9 +101,7 @@ namespace Selfie1
 			outputImageVisual.Draw(new Cross2DF(outputEyeRight, crossSize, crossSize), colorRight, thickness);
 			outputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(outputEyeLeft, outputEyeRight), crossSize, crossSize), colorThird, thickness);
 
-			//todo: transformation seems fine, but final image is too small and doesnt fit .
-				//try visualize final dest
-			SetOutputImage(outputImageVisual.AsBitmap());
+			pictureBox_Output.Image = outputImageVisual.AsBitmap();
 		}
 	}
 }

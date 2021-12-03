@@ -44,11 +44,19 @@ namespace Selfie1
 			{
 				case Keys.Space:
 					manualInput.Apply();
-					break;
-				case Keys.Enter:
 					saveLoad.Save();
 					break;
+				case Keys.V:
+					saveLoad.Save();
+					break;
+				case Keys.C:
+					manualInput.Apply();
+					break;
 
+
+				case Keys.ShiftKey:
+					manualInput.ToggleMoveSpeed();
+					break;
 				case Keys.W:
 					manualInput.MoveInputLeftEye(0, -1);
 					break;
