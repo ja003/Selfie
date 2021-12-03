@@ -17,6 +17,7 @@ namespace Selfie1
 
 		string outputPath = "D:\\Coding\\C#\\Selfie\\output\\";
 
+		static public Action OnSave;
 
 		public SaveLoad(ManualInput manualInput)
 		{
@@ -63,6 +64,8 @@ namespace Selfie1
 			string fileName = manualInput.InputImageFile.Name; //includes .jpg
 			string outputFileFullName = Path.Combine(outputPath, fileName);
 			manualInput.GetOutputBitmap().Save(outputFileFullName, jpegCodec, encoderParams);
+
+			OnSave.Invoke();
 		}
 
 		internal void SetOutputFolder(string path)
