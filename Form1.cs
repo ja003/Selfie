@@ -56,6 +56,7 @@ namespace Selfie1
 
 			filename = "_0000_IMG_20171101_091405.jpg";
 			filename = "IMG_20210413_222434.jpg";
+			filename = "IMG_20211113_150047_resize_2912.jpg";
 
 			FileInfo file = new FileInfo(img_folder + filename);
 

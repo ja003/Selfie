@@ -15,6 +15,8 @@ namespace Selfie1
 {
 	class ManualInput
 	{
+		private const int REF_WIDTH = 1920;
+		private const int REF_HEIGHT = 1080;
 		Image<Bgr, byte> inputImage;
 		Image<Bgr, byte> outputImage;
 		public FileInfo InputImageFile { get; private set; }
@@ -46,37 +48,44 @@ namespace Selfie1
 		{
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
 
-			//const int newWidth = 1920;
-			//double scale = 1920f / image.Width;
-			//int newHeight = (int)(image.Height * scale);
-			//image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
-
-			const int newHeight = 1080;
-			double scale = 1280f / image.Height;
+			const int newHeight = REF_HEIGHT;
+			double scale = (float)REF_HEIGHT / image.Height;
 			int newWidth = (int)(image.Width * scale);
-			image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
 
 			inputImage = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
-			//inputImage = image.Resize(1920, 1080, Emgu.CV.CvEnum.Inter.Nearest);
 			outputImage = inputImage.CopyBlank();
 			InputImageFile = file;
 
 			visuals.SetInputImage(inputImage.AsBitmap());
-			//pictureBox_Input.Image = inputImage.AsBitmap();
 
 			//debug
 			//OnClick_Apply();
 
+			SetOutputEyes();
+
+			//debug
+			//187,130
+			//253,129
+
+			//206,126
+			//283,123
+			
+
+			SetInputLeftEye(221, 135);
+			SetInputRightEye(269, 133);
+		}
+
+		private void SetOutputEyes()
+		{
+			//TODO: make as input
 			const int destLeftEyePos = 836;
 			const int destRightEyePos = 1086;
 
-			const float outLeftEyePosPercentage = destLeftEyePos / 1920f;
-			const float outRightEyePosPercentage = destRightEyePos / 1920f;
 
-			int halfWidthDiffInOut = (1920 - outputImage.Size.Width) / 2;
+			int halfWidthDiffInOut = (REF_WIDTH - outputImage.Size.Width) / 2;
 
 			int destLeftEyePosScaled = destLeftEyePos - halfWidthDiffInOut;
-			int destRightEyePosScaled = outputImage.Size.Width - ((1920 - destRightEyePos) - halfWidthDiffInOut);
+			int destRightEyePosScaled = outputImage.Size.Width - (REF_WIDTH - destRightEyePos - halfWidthDiffInOut);
 
 
 			//int outputLeftX = (int)(outLeftEyePosPercentage * inputImage.Size.Width);
@@ -87,15 +96,6 @@ namespace Selfie1
 			int outputY = (int)(inputImage.Size.Height / 2);
 			outputEyeLeft = new PointF(outputLeftX, outputY);
 			outputEyeRight = new PointF(outputRightX, outputY);
-
-			//debug
-			//187,130
-			//253,129
-
-			//206,126
-			//283,123
-			SetInputLeftEye(206, 126);
-			SetInputRightEye(283, 123);
 		}
 
 
