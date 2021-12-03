@@ -15,6 +15,7 @@ namespace Selfie1
 {
 	class ManualInput
 	{
+		//todo: make customizable
 		private const int REF_WIDTH = 1920;
 		private const int REF_HEIGHT = 1080;
 		Image<Bgr, byte> inputImage;
@@ -145,7 +146,7 @@ namespace Selfie1
 
 		private void SetOutputEyes()
 		{
-			//TODO: make as input
+			//TODO: make as input (after REF_WIDTH is made customizable)
 			const int destLeftEyePos = 836;
 			const int destRightEyePos = 1086;
 
@@ -187,12 +188,26 @@ namespace Selfie1
 
 		}
 
+
+		public void MoveInputLeftEye(int xDiff, int yDiff)
+		{
+			inputEyeLeft = new PointF((int)inputEyeLeft.X + xDiff, (int)inputEyeLeft.Y + yDiff);
+			RefreshEyeVisuals();
+		}
+
+
+		public void MoveInputRightEye(int xDiff, int yDiff)
+		{
+			inputEyeRight = new PointF((int)inputEyeRight.X + xDiff, (int)inputEyeRight.Y + yDiff);
+			RefreshEyeVisuals();
+		}
+
 		private void SetInputLeftEye(int inputPictureCoordX, int inputPictureCoordY)
 		{
 			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
 			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
 			inputEyeLeft = new PointF(imageCoordX, imageCoordY);
-			visuals.RefreshEyeVisuals(inputImage, inputEyeLeft, inputEyeRight);
+			RefreshEyeVisuals();
 		}
 
 
@@ -201,6 +216,12 @@ namespace Selfie1
 			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
 			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
 			inputEyeRight = new PointF(imageCoordX, imageCoordY);
+			RefreshEyeVisuals();
+		}
+
+
+		private void RefreshEyeVisuals()
+		{
 			visuals.RefreshEyeVisuals(inputImage, inputEyeLeft, inputEyeRight);
 		}
 
@@ -236,7 +257,7 @@ namespace Selfie1
 			ApplyTransform();
 
 			visuals.SetOutputImage(outputImage.AsBitmap());
-			visuals.debug_ShowOutputEyes(outputImage, outputEyeLeft, outputEyeRight);
+			//visuals.debug_ShowOutputEyes(outputImage, outputEyeLeft, outputEyeRight);
 		}
 
 		private void ApplyTransform()

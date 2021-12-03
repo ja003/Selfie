@@ -45,6 +45,35 @@ namespace Selfie1
 				case Keys.Space:
 					manualInput.Apply();
 					break;
+				case Keys.Enter:
+					saveLoad.Save();
+					break;
+
+				case Keys.W:
+					manualInput.MoveInputLeftEye(0, -1);
+					break;
+				case Keys.A:
+					manualInput.MoveInputLeftEye(-1, 0);
+					break;
+				case Keys.S:
+					manualInput.MoveInputLeftEye(0, 1);
+					break;
+				case Keys.D:
+					manualInput.MoveInputLeftEye(1, 0);
+					break;
+
+				case Keys.NumPad8:
+					manualInput.MoveInputRightEye(0, -1);
+					break;
+				case Keys.NumPad4:
+					manualInput.MoveInputRightEye(-1, 0);
+					break;
+				case Keys.NumPad5:
+					manualInput.MoveInputRightEye(0, 1);
+					break;
+				case Keys.NumPad6:
+					manualInput.MoveInputRightEye(1, 0);
+					break;
 			}
 		}
 
@@ -111,7 +140,8 @@ namespace Selfie1
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			if(dialog.ShowDialog() == DialogResult.OK)
 			{
-				saveLoad.SetOutputFolder(dialog.SelectedPath);
+				//saveLoad.SetOutputFolder(dialog.SelectedPath);
+				textBox_OutputFolder.Text = dialog.SelectedPath;
 			}
 		}
 
@@ -122,6 +152,11 @@ namespace Selfie1
 			{
 				bulkInput.SetInputFolder(dialog.SelectedPath);
 			}
+		}
+
+		private void textBox_OutputFolder_TextChanged(object sender, EventArgs e)
+		{
+			saveLoad.SetOutputFolder(textBox_OutputFolder.Text);
 		}
 	}
 }
