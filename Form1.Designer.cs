@@ -39,9 +39,13 @@ namespace Selfie1
 			this.saveToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.button_Save = new System.Windows.Forms.Button();
 			this.textBox_OutputFolder = new System.Windows.Forms.TextBox();
+			this.pictureBox_EyeLeft = new System.Windows.Forms.PictureBox();
+			this.pictureBox_EyeRight = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).BeginInit();
 			this.menuStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_EyeLeft)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_EyeRight)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox_Input
@@ -136,11 +140,29 @@ namespace Selfie1
 			this.textBox_OutputFolder.TabIndex = 14;
 			this.textBox_OutputFolder.TextChanged += new System.EventHandler(this.textBox_OutputFolder_TextChanged);
 			// 
+			// pictureBox_EyeLeft
+			// 
+			this.pictureBox_EyeLeft.Location = new System.Drawing.Point(146, 423);
+			this.pictureBox_EyeLeft.Name = "pictureBox_EyeLeft";
+			this.pictureBox_EyeLeft.Size = new System.Drawing.Size(108, 62);
+			this.pictureBox_EyeLeft.TabIndex = 15;
+			this.pictureBox_EyeLeft.TabStop = false;
+			// 
+			// pictureBox_EyeRight
+			// 
+			this.pictureBox_EyeRight.Location = new System.Drawing.Point(304, 423);
+			this.pictureBox_EyeRight.Name = "pictureBox_EyeRight";
+			this.pictureBox_EyeRight.Size = new System.Drawing.Size(108, 62);
+			this.pictureBox_EyeRight.TabIndex = 16;
+			this.pictureBox_EyeRight.TabStop = false;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1322, 559);
+			this.Controls.Add(this.pictureBox_EyeRight);
+			this.Controls.Add(this.pictureBox_EyeLeft);
 			this.Controls.Add(this.textBox_OutputFolder);
 			this.Controls.Add(this.button_Save);
 			this.Controls.Add(this.button_Apply);
@@ -156,6 +178,8 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_EyeLeft)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_EyeRight)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -172,6 +196,8 @@ namespace Selfie1
 		private System.Windows.Forms.ToolStripMenuItem loadFileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToFolderToolStripMenuItem;
 		private System.Windows.Forms.TextBox textBox_OutputFolder;
+		private System.Windows.Forms.PictureBox pictureBox_EyeLeft;
+		private System.Windows.Forms.PictureBox pictureBox_EyeRight;
 	}
 }
 

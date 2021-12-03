@@ -55,32 +55,9 @@ namespace Selfie1
 
 			SetOutputEyes();
 
-			//DEBUG
-			//IMG_20210413_222434
-			SetInputLeftEye(214, 126);
-			SetInputRightEye(271, 126);
-
-
-			//debug
-			//visuals.SetInputImage(image.AsBitmap());
-
-			//debug
-			//OnClick_Apply();
-
-
-			//debug
-			//187,130
-			//253,129
-
-			//206,126
-			//283,123
-
-
-			//IMG_20211113_150047_resize_2912
-			//SetInputLeftEye(221, 135);
-			//SetInputRightEye(269, 133);
-
-
+			//set some init pos
+			SetInputLeftEye(287, 167);
+			SetInputRightEye(363, 167);
 		}
 
 		/// <summary>
@@ -256,8 +233,8 @@ namespace Selfie1
 		{
 			ApplyTransform();
 
-			visuals.SetOutputImage(outputImage.AsBitmap());
-			//visuals.debug_ShowOutputEyes(outputImage, outputEyeLeft, outputEyeRight);
+			//visuals.SetOutputImage(outputImage.AsBitmap());
+			visuals.debug_ShowOutputEyes(outputImage, outputEyeLeft, outputEyeRight);
 		}
 
 		private void ApplyTransform()

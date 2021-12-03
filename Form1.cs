@@ -29,7 +29,7 @@ namespace Selfie1
 		{
 			InitializeComponent();
 
-			visuals = new Visuals(pictureBox_Input, pictureBox_Output);
+			visuals = new Visuals(pictureBox_Input, pictureBox_Output, pictureBox_EyeLeft, pictureBox_EyeRight);
 			manualInput = new ManualInput(visuals);
 			saveLoad = new SaveLoad(manualInput);
 			bulkInput = new BulkInputManager(manualInput);
@@ -102,6 +102,8 @@ namespace Selfie1
 			//DetectEyesHaar();
 			//TODO:
 			//pictureBox_Input.Image = Detection.DetectEyesHaar();
+
+			textBox_OutputFolder.Text = PropertyManager.OutputFolder;
 		}
 
 
