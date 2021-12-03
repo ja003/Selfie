@@ -19,6 +19,7 @@ namespace Selfie1
 
 		Bgr colorLeft = new Bgr(255, 0, 0);
 		Bgr colorRight = new Bgr(255, 255, 0);
+		Bgr colorThird = new Bgr(50, 50, 50);
 
 		public Visuals(PictureBox pictureBox_Input, PictureBox pictureBox_Output)
 		{
@@ -34,7 +35,7 @@ namespace Selfie1
 			
 			inputImageVisual.Draw(new Cross2DF(eyeLeftPos, crossSize, crossSize), colorLeft, thickness);
 			inputImageVisual.Draw(new Cross2DF(eyeRightPos, crossSize, crossSize), colorRight, thickness);
-			inputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(eyeLeftPos, eyeRightPos), crossSize, crossSize), colorRight, thickness);
+			inputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(eyeLeftPos, eyeRightPos), crossSize, crossSize), colorThird, thickness);
 
 
 			SetInputImage(inputImageVisual.AsBitmap());
