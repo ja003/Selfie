@@ -49,20 +49,37 @@ namespace Selfie1
 			InputImageFile = file;
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
 
-			const int newHeight = REF_HEIGHT;
-			double scale = (float)REF_HEIGHT / image.Height;
-			int newWidth = (int)(image.Width * scale);
+			float imageAspectRatio = (float)image.Size.Width / image.Size.Height;
+			float refAspectRatio = (float)REF_WIDTH / REF_HEIGHT;
+			bool isScaleHeight = imageAspectRatio < refAspectRatio;
+
+			int newWidth = REF_WIDTH;
+			int newHeight = REF_HEIGHT;
+			double scale = isScaleHeight ?
+				(float)REF_HEIGHT / image.Height : (float)REF_WIDTH / image.Width;
+
+			if(isScaleHeight)
+				newWidth = (int)(image.Width * scale);
+			else
+				newHeight = (int)(image.Height * scale);
 
 
 			image = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
-			inputImage = new Image<Bgr, byte>(REF_WIDTH, REF_HEIGHT, new Bgr(255,0,0));
-			int halfWidthDiff = (REF_WIDTH - newWidth) / 2;
+			inputImage = new Image<Bgr, byte>(REF_WIDTH, REF_HEIGHT, new Bgr(255, 0, 0));
 
+			int borderDiff = isScaleHeight ? 
+				(REF_WIDTH - newWidth) / 2 : (REF_HEIGHT - newHeight) / 2;
 			//https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html#copymakeborder
 			//the borders need to match exactly so if halfWidth is not even number, we have to 
 			//calculate the remain
-			int halfWidthDiffRest = REF_WIDTH - image.Size.Width - halfWidthDiff;
-			CvInvoke.CopyMakeBorder(image, inputImage, 0, 0, halfWidthDiff, halfWidthDiffRest, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(255,255,255));
+			int borderDiffRest = (isScaleHeight ? REF_WIDTH - image.Size.Width : REF_HEIGHT - image.Size.Height) - borderDiff;
+
+			int top = isScaleHeight ? 0 : borderDiff;
+			int bot = isScaleHeight ? 0 : borderDiffRest;
+			int right = isScaleHeight ? borderDiff : 0;
+			int left = isScaleHeight ? borderDiffRest : 0;
+
+			CvInvoke.CopyMakeBorder(image, inputImage, top, bot, left, right, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(255, 255, 255));
 			//image.CopyTo(inputImage);
 
 
@@ -75,7 +92,7 @@ namespace Selfie1
 			//IMG_20210413_222434
 			SetInputLeftEye(214, 126);
 			SetInputRightEye(271, 126);
-			
+
 
 			//debug
 			//visuals.SetInputImage(image.AsBitmap());
@@ -96,7 +113,7 @@ namespace Selfie1
 			//SetInputLeftEye(221, 135);
 			//SetInputRightEye(269, 133);
 
-			
+
 		}
 
 		private void SetOutputEyes()
