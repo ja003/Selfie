@@ -31,7 +31,7 @@ namespace Selfie1
 		{
 			Image<Bgr, byte> inputImageVisual = inputImage.Copy();
 			const int crossSize = 50;
-			const int thickness = 20;
+			const int thickness = 5;
 			
 			inputImageVisual.Draw(new Cross2DF(eyeLeftPos, crossSize, crossSize), colorLeft, thickness);
 			inputImageVisual.Draw(new Cross2DF(eyeRightPos, crossSize, crossSize), colorRight, thickness);
@@ -70,11 +70,11 @@ namespace Selfie1
 		{
 			Image<Bgr, byte> outputImageVisual = outputImage.Copy();
 			const int crossSize = 50;
-			const int thickness = 20;
+			const int thickness = 5;
 
 			outputImageVisual.Draw(new Cross2DF(outputEyeLeft, crossSize, crossSize), colorLeft, thickness);
 			outputImageVisual.Draw(new Cross2DF(outputEyeRight, crossSize, crossSize), colorRight, thickness);
-			outputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(outputEyeLeft, outputEyeRight), crossSize, crossSize), colorRight, thickness);
+			outputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(outputEyeLeft, outputEyeRight), crossSize, crossSize), colorThird, thickness);
 
 			//todo: transformation seems fine, but final image is too small and doesnt fit .
 				//try visualize final dest
