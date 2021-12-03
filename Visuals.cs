@@ -75,6 +75,8 @@ namespace Selfie1
 			outputImageVisual.Draw(new Cross2DF(outputEyeRight, crossSize, crossSize), colorRight, thickness);
 			outputImageVisual.Draw(new Cross2DF(ManualInput.GetThirdPoint(outputEyeLeft, outputEyeRight), crossSize, crossSize), colorRight, thickness);
 
+			//todo: transformation seems fine, but final image is too small and doesnt fit .
+				//try visualize final dest
 			SetOutputImage(outputImageVisual.AsBitmap());
 		}
 	}

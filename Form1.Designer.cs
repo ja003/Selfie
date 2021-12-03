@@ -63,7 +63,7 @@ namespace Selfie1
 			// 
 			this.pictureBox_Input.Location = new System.Drawing.Point(13, 47);
 			this.pictureBox_Input.Name = "pictureBox_Input";
-			this.pictureBox_Input.Size = new System.Drawing.Size(434, 280);
+			this.pictureBox_Input.Size = new System.Drawing.Size(480, 270);
 			this.pictureBox_Input.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_Input.TabIndex = 1;
 			this.pictureBox_Input.TabStop = false;
@@ -145,7 +145,7 @@ namespace Selfie1
 			// 
 			this.pictureBox_Output.Location = new System.Drawing.Point(476, 47);
 			this.pictureBox_Output.Name = "pictureBox_Output";
-			this.pictureBox_Output.Size = new System.Drawing.Size(434, 280);
+			this.pictureBox_Output.Size = new System.Drawing.Size(480, 270);
 			this.pictureBox_Output.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_Output.TabIndex = 10;
 			this.pictureBox_Output.TabStop = false;
