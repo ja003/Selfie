@@ -60,7 +60,16 @@ namespace Selfie1
 				return;
 			}
 
+
+
 			string fileName = manualInput.InputImageFile.Name; //includes .jpg
+			if(BulkInputManager.currentFileIndex >= 0)
+			{
+				fileName = Path.GetFileNameWithoutExtension(manualInput.InputImageFile.FullName);
+				fileName += "_" + BulkInputManager.currentFileIndex.ToString("00");
+				fileName += Path.GetExtension(manualInput.InputImageFile.FullName);
+			}
+
 			string outputFileFullName = Path.Combine(outputPath, fileName);
 			manualInput.GetOutputBitmap().Save(outputFileFullName, jpegCodec, encoderParams);
 

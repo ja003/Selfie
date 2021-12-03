@@ -234,7 +234,7 @@ namespace Selfie1
 			ApplyTransform();
 
 			//visuals.SetOutputImage(outputImage.AsBitmap());
-			visuals.debug_ShowOutputEyes(outputImage, outputEyeLeft, outputEyeRight);
+			visuals.SetOuputImage(outputImage, outputEyeLeft, outputEyeRight);
 		}
 
 		private void ApplyTransform()

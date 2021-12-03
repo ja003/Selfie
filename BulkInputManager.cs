@@ -12,7 +12,7 @@ namespace Selfie1
 	{
 		private DirectoryInfo inputFolder;
 		private FileInfo[] inputFiles = new FileInfo[0];
-		int currentFileIndex = -1;
+		public static int currentFileIndex = -1;
 		private ManualInput manualInput;
 
 		public BulkInputManager(ManualInput manualInput)
@@ -47,6 +47,7 @@ namespace Selfie1
 			if(!ExistsNextFile())
 			{
 				Debug.WriteLine("no next file to process");
+				currentFileIndex = -1;
 				return;
 			}
 			ProcessFile(inputFiles[currentFileIndex]);
