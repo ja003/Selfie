@@ -53,6 +53,10 @@ namespace Selfie1
 					manualInput.Apply();
 					break;
 
+
+				case Keys.ShiftKey:
+					manualInput.ToggleMoveSpeed();
+					break;
 				case Keys.W:
 					manualInput.MoveInputLeftEye(0, -1);
 					break;

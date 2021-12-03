@@ -60,6 +60,7 @@ namespace Selfie1
 			SetInputRightEye(363, 167);
 		}
 
+
 		/// <summary>
 		/// Format input image to fit ref width and height
 		/// </summary>
@@ -166,16 +167,22 @@ namespace Selfie1
 		}
 
 
+		int moveSpeed = 1;
+		internal void ToggleMoveSpeed()
+		{
+			moveSpeed = moveSpeed > 1 ? 1 : 5;
+		}
+
 		public void MoveInputLeftEye(int xDiff, int yDiff)
 		{
-			inputEyeLeft = new PointF((int)inputEyeLeft.X + xDiff, (int)inputEyeLeft.Y + yDiff);
+			inputEyeLeft = new PointF((int)inputEyeLeft.X + xDiff * moveSpeed, (int)inputEyeLeft.Y + yDiff * moveSpeed);
 			RefreshEyeVisuals();
 		}
 
 
 		public void MoveInputRightEye(int xDiff, int yDiff)
 		{
-			inputEyeRight = new PointF((int)inputEyeRight.X + xDiff, (int)inputEyeRight.Y + yDiff);
+			inputEyeRight = new PointF((int)inputEyeRight.X + xDiff * moveSpeed, (int)inputEyeRight.Y + yDiff * moveSpeed);
 			RefreshEyeVisuals();
 		}
 
