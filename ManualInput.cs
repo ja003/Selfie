@@ -46,22 +46,43 @@ namespace Selfie1
 		}
 		internal void SetInput(FileInfo file)
 		{
+			InputImageFile = file;
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
 
 			const int newHeight = REF_HEIGHT;
 			double scale = (float)REF_HEIGHT / image.Height;
 			int newWidth = (int)(image.Width * scale);
 
-			inputImage = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
+
+			image = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
+			inputImage = new Image<Bgr, byte>(REF_WIDTH, REF_HEIGHT, new Bgr(255,0,0));
+			int halfWidthDiff = (REF_WIDTH - newWidth) / 2;
+
+			//https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html#copymakeborder
+			//the borders need to match exactly so if halfWidth is not even number, we have to 
+			//calculate the remain
+			int halfWidthDiffRest = REF_WIDTH - image.Size.Width - halfWidthDiff;
+			CvInvoke.CopyMakeBorder(image, inputImage, 0, 0, halfWidthDiff, halfWidthDiffRest, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(255,255,255));
+			//image.CopyTo(inputImage);
+
+
+
 			outputImage = inputImage.CopyBlank();
-			InputImageFile = file;
+
 
 			visuals.SetInputImage(inputImage.AsBitmap());
+			SetOutputEyes();
+			//IMG_20210413_222434
+			SetInputLeftEye(214, 126);
+			SetInputRightEye(271, 126);
+			
+
+			//debug
+			//visuals.SetInputImage(image.AsBitmap());
 
 			//debug
 			//OnClick_Apply();
 
-			SetOutputEyes();
 
 			//debug
 			//187,130
@@ -69,10 +90,13 @@ namespace Selfie1
 
 			//206,126
 			//283,123
-			
 
-			SetInputLeftEye(221, 135);
-			SetInputRightEye(269, 133);
+
+			//IMG_20211113_150047_resize_2912
+			//SetInputLeftEye(221, 135);
+			//SetInputRightEye(269, 133);
+
+			
 		}
 
 		private void SetOutputEyes()
