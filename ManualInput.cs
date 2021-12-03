@@ -49,15 +49,34 @@ namespace Selfie1
 			InputImageFile = file;
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
 
+			//detect if we will scale image to fit ref height or width
 			float imageAspectRatio = (float)image.Size.Width / image.Size.Height;
 			float refAspectRatio = (float)REF_WIDTH / REF_HEIGHT;
 			bool isScaleHeight = imageAspectRatio < refAspectRatio;
 
+			//    _________REF_WIDTH__________
+			//   |                            |
+			//   |                            |
+			//   REF_HEIGHT                   |
+			//   |                            |
+			//   |                            |
+			//   |____________________________|
+
+			// isScaleHeight:
+			//   borderDiff___newWidth____borderDiffRest
+			//     |                        |
+			//     |                        |
+			//     newHeight                |
+			//     |                        |
+			//     |                        |
+			// left|________________________|right
+
+
+			//calculate new width and height
 			int newWidth = REF_WIDTH;
 			int newHeight = REF_HEIGHT;
 			double scale = isScaleHeight ?
 				(float)REF_HEIGHT / image.Height : (float)REF_WIDTH / image.Width;
-
 			if(isScaleHeight)
 				newWidth = (int)(image.Width * scale);
 			else
@@ -67,6 +86,7 @@ namespace Selfie1
 			image = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
 			inputImage = new Image<Bgr, byte>(REF_WIDTH, REF_HEIGHT, new Bgr(255, 0, 0));
 
+			//calculate border difference
 			int borderDiff = isScaleHeight ? 
 				(REF_WIDTH - newWidth) / 2 : (REF_HEIGHT - newHeight) / 2;
 			//https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html#copymakeborder
@@ -78,17 +98,17 @@ namespace Selfie1
 			int bot = isScaleHeight ? 0 : borderDiffRest;
 			int right = isScaleHeight ? borderDiff : 0;
 			int left = isScaleHeight ? borderDiffRest : 0;
-
-			CvInvoke.CopyMakeBorder(image, inputImage, top, bot, left, right, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(255, 255, 255));
-			//image.CopyTo(inputImage);
-
-
+			//todo: make input
+			MCvScalar whiteBg = new MCvScalar(255, 255, 255);
+			CvInvoke.CopyMakeBorder(image, inputImage, top, bot, left, right,
+				Emgu.CV.CvEnum.BorderType.Constant, whiteBg);
+			visuals.SetInputImage(inputImage.AsBitmap());
 
 			outputImage = inputImage.CopyBlank();
 
-
-			visuals.SetInputImage(inputImage.AsBitmap());
 			SetOutputEyes();
+
+			//DEBUG
 			//IMG_20210413_222434
 			SetInputLeftEye(214, 126);
 			SetInputRightEye(271, 126);
