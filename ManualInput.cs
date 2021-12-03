@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +15,8 @@ namespace Selfie1
 {
 	class ManualInput
 	{
+		private const int REF_WIDTH = 1920;
+		private const int REF_HEIGHT = 1080;
 		Image<Bgr, byte> inputImage;
 		Image<Bgr, byte> outputImage;
 		public FileInfo InputImageFile { get; private set; }
@@ -28,7 +31,7 @@ namespace Selfie1
 		{
 			this.visuals = visuals;
 
-			
+
 		}
 
 		internal Bitmap GetOutputBitmap()
@@ -45,20 +48,51 @@ namespace Selfie1
 		{
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
 
-			//double scale = 1920f / image.Width;
-			inputImage = image;
-			outputImage = image.CopyBlank();
+			const int newHeight = REF_HEIGHT;
+			double scale = (float)REF_HEIGHT / image.Height;
+			int newWidth = (int)(image.Width * scale);
+
+			inputImage = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
+			outputImage = inputImage.CopyBlank();
 			InputImageFile = file;
-			//inputImage = image.Resize(scale, Emgu.CV.CvEnum.Inter.Linear);
 
 			visuals.SetInputImage(inputImage.AsBitmap());
-			//pictureBox_Input.Image = inputImage.AsBitmap();
 
 			//debug
 			//OnClick_Apply();
 
-			int outputLeftX = (int)(836f / 1920 * inputImage.Size.Width);
-			int outputRightX = (int)(1086f / 1920 * inputImage.Size.Width);
+			SetOutputEyes();
+
+			//debug
+			//187,130
+			//253,129
+
+			//206,126
+			//283,123
+			
+
+			SetInputLeftEye(221, 135);
+			SetInputRightEye(269, 133);
+		}
+
+		private void SetOutputEyes()
+		{
+			//TODO: make as input
+			const int destLeftEyePos = 836;
+			const int destRightEyePos = 1086;
+
+
+			int halfWidthDiffInOut = (REF_WIDTH - outputImage.Size.Width) / 2;
+
+			int destLeftEyePosScaled = destLeftEyePos - halfWidthDiffInOut;
+			int destRightEyePosScaled = outputImage.Size.Width - (REF_WIDTH - destRightEyePos - halfWidthDiffInOut);
+
+
+			//int outputLeftX = (int)(outLeftEyePosPercentage * inputImage.Size.Width);
+			//int outputRightX = (int)(outRightEyePosPercentage * inputImage.Size.Width);
+			int outputLeftX = destLeftEyePosScaled;
+			int outputRightX = destRightEyePosScaled;
+
 			int outputY = (int)(inputImage.Size.Height / 2);
 			outputEyeLeft = new PointF(outputLeftX, outputY);
 			outputEyeRight = new PointF(outputRightX, outputY);
@@ -93,15 +127,15 @@ namespace Selfie1
 			visuals.RefreshEyeVisuals(inputImage, inputEyeLeft, inputEyeRight);
 		}
 
-		
+
 		private void SetInputRightEye(int inputPictureCoordX, int inputPictureCoordY)
 		{
 			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
 			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
 			inputEyeRight = new PointF(imageCoordX, imageCoordY);
 			visuals.RefreshEyeVisuals(inputImage, inputEyeLeft, inputEyeRight);
-		}		
-			
+		}
+
 
 
 		internal void OnClick_Apply()
@@ -125,7 +159,7 @@ namespace Selfie1
 			input_eyeRight = new PointF(testRightX, testRightY);
 			*/
 
-			
+
 			Apply();
 		}
 
@@ -134,19 +168,31 @@ namespace Selfie1
 			ApplyTransform();
 
 			visuals.SetOutputImage(outputImage.AsBitmap());
+			visuals.debug_ShowOutputEyes(outputImage, outputEyeLeft, outputEyeRight);
 		}
 
 		private void ApplyTransform()
 		{
 			PointF thirdPointSrc = inputEyeRight;
 			thirdPointSrc.Y += 10; //todo: calculate orthogonal point?
-								   //thirdPointSrc = input_eyeRight;
+
+			//thirdPointSrc = input_eyeRight;
+			thirdPointSrc = GetThirdPoint(inputEyeLeft, inputEyeRight);
+
 			PointF thirdPointDest = outputEyeRight;
 			thirdPointDest.Y += 10;
+			//thirdPointDest = new PointF(
+			//	(outputEyeLeft.X + outputEyeRight.X) / 2,
+			//	(outputEyeLeft.Y + outputEyeRight.Y) / 2);
 			//thirdPointDest = output_eyeRight;
+			thirdPointDest = GetThirdPoint(outputEyeLeft, outputEyeRight);
 
 			PointF[] src = new PointF[] { inputEyeLeft, inputEyeRight, thirdPointSrc };
 			PointF[] dest = new PointF[] { outputEyeLeft, outputEyeRight, thirdPointDest };
+
+			Debug.WriteLine($"src = [{inputEyeLeft},{inputEyeRight},{thirdPointSrc}]");
+			Debug.WriteLine($"dest = [{outputEyeLeft},{outputEyeRight},{thirdPointDest}]");
+			Debug.WriteLine($"dest = [{outputEyeLeft},{outputEyeRight},{thirdPointDest}]");
 
 			//src = new PointF[] { new PointF(0, 0), new PointF(10, 0), new PointF(0, 10) };
 			//const int offset = 200;
@@ -159,5 +205,16 @@ namespace Selfie1
 
 		}
 
+		public static PointF GetThirdPoint(PointF point1, PointF point2)
+		{
+			PointF thirdPoint;
+			Vector2 ier = new Vector2(point2.X, point2.Y);
+			Vector2 iel = new Vector2(point1.X, point1.Y);
+			Vector2 dir = ier - iel;
+			dir = new Vector2(-dir.Y, dir.X);
+			Vector2 thirdPointSrcVec = (ier + iel) / 2 + dir / 2;
+			thirdPoint = new PointF(thirdPointSrcVec.X, thirdPointSrcVec.Y);
+			return thirdPoint;
+		}
 	}
 }

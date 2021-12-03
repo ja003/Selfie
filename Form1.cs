@@ -23,6 +23,7 @@ namespace Selfie1
 		ManualInput manualInput;
 		Visuals visuals;
 		SaveLoad saveLoad;
+		BulkInputManager bulkInput;
 
 		public Form1()
 		{
@@ -31,6 +32,7 @@ namespace Selfie1
 			visuals = new Visuals(pictureBox_Input, pictureBox_Output);
 			manualInput = new ManualInput(visuals);
 			saveLoad = new SaveLoad(manualInput);
+			bulkInput = new BulkInputManager(manualInput);
 
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
@@ -53,6 +55,8 @@ namespace Selfie1
 			filename = "IMG_20190610_104519.jpg"; //[1784,1125]/(4160,2340)
 
 			filename = "_0000_IMG_20171101_091405.jpg";
+			filename = "IMG_20210413_222434.jpg";
+			filename = "IMG_20211113_150047_resize_2912.jpg";
 
 			FileInfo file = new FileInfo(img_folder + filename);
 
@@ -108,6 +112,15 @@ namespace Selfie1
 			if(dialog.ShowDialog() == DialogResult.OK)
 			{
 				saveLoad.SetOutputFolder(dialog.SelectedPath);
+			}
+		}
+
+		private void folderToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			if(dialog.ShowDialog() == DialogResult.OK)
+			{
+				bulkInput.SetInputFolder(dialog.SelectedPath);
 			}
 		}
 	}
