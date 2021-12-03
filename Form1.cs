@@ -102,6 +102,8 @@ namespace Selfie1
 			//DetectEyesHaar();
 			//TODO:
 			//pictureBox_Input.Image = Detection.DetectEyesHaar();
+
+			textBox_OutputFolder.Text = PropertyManager.OutputFolder;
 		}
 
 

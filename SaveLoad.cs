@@ -33,7 +33,6 @@ namespace Selfie1
 			// Jpeg image codec
 			jpegCodec = this.getEncoderInfo("image/jpeg");
 
-
 		}
 
 		private ImageCodecInfo getEncoderInfo(string mimeType)
@@ -79,6 +78,9 @@ namespace Selfie1
 			}
 
 			outputPath = path;
+
+			PropertyManager.OutputFolder = path;
+			Properties.Settings.Default["outputFolder"] = path;
 		}
 	}
 }
