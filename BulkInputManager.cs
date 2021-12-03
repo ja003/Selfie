@@ -11,13 +11,14 @@ namespace Selfie1
 	class BulkInputManager
 	{
 		private DirectoryInfo inputFolder;
-		private FileInfo[] inputFiles;
-		int currentFileIndex;
+		private FileInfo[] inputFiles = new FileInfo[0];
+		int currentFileIndex = -1;
 		private ManualInput manualInput;
 
 		public BulkInputManager(ManualInput manualInput)
 		{
 			this.manualInput = manualInput;
+			SaveLoad.OnSave += ProcessNextFile;
 		}
 
 		internal void SetInputFolder(string path)
@@ -41,8 +42,19 @@ namespace Selfie1
 
 		public void ProcessNextFile()
 		{
-			ProcessFile(inputFiles[currentFileIndex]);
 			currentFileIndex++;
+
+			if(!ExistsNextFile())
+			{
+				Debug.WriteLine("no next file to process");
+				return;
+			}
+			ProcessFile(inputFiles[currentFileIndex]);
+		}
+
+		private bool ExistsNextFile()
+		{
+			return currentFileIndex < inputFiles.Length;
 		}
 
 		private void ProcessFile(FileInfo fileInfo)

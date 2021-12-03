@@ -46,22 +46,26 @@ namespace Selfie1
 		}
 		internal void SetInput(FileInfo file)
 		{
-			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
-
-			const int newHeight = REF_HEIGHT;
-			double scale = (float)REF_HEIGHT / image.Height;
-			int newWidth = (int)(image.Width * scale);
-
-			inputImage = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
-			outputImage = inputImage.CopyBlank();
 			InputImageFile = file;
+			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
+			SetInputImage(image);
 
-			visuals.SetInputImage(inputImage.AsBitmap());
+			outputImage = inputImage.CopyBlank();
+
+			SetOutputEyes();
+
+			//DEBUG
+			//IMG_20210413_222434
+			SetInputLeftEye(214, 126);
+			SetInputRightEye(271, 126);
+
+
+			//debug
+			//visuals.SetInputImage(image.AsBitmap());
 
 			//debug
 			//OnClick_Apply();
 
-			SetOutputEyes();
 
 			//debug
 			//187,130
@@ -69,10 +73,74 @@ namespace Selfie1
 
 			//206,126
 			//283,123
-			
 
-			SetInputLeftEye(221, 135);
-			SetInputRightEye(269, 133);
+
+			//IMG_20211113_150047_resize_2912
+			//SetInputLeftEye(221, 135);
+			//SetInputRightEye(269, 133);
+
+
+		}
+
+		/// <summary>
+		/// Format input image to fit ref width and height
+		/// </summary>
+		void SetInputImage(Image<Bgr, byte> image)
+		{
+			//detect if we will scale image to fit ref height or width
+			float imageAspectRatio = (float)image.Size.Width / image.Size.Height;
+			float refAspectRatio = (float)REF_WIDTH / REF_HEIGHT;
+			bool isScaleHeight = imageAspectRatio < refAspectRatio;
+
+			//    _________REF_WIDTH__________
+			//   |                            |
+			//   |                            |
+			//   REF_HEIGHT                   |
+			//   |                            |
+			//   |                            |
+			//   |____________________________|
+
+			// isScaleHeight:
+			//   borderDiff___newWidth____borderDiffRest
+			//     |                        |
+			//     |                        |
+			//     newHeight                |
+			//     |                        |
+			//     |                        |
+			// left|________________________|right
+
+
+			//calculate new width and height
+			int newWidth = REF_WIDTH;
+			int newHeight = REF_HEIGHT;
+			double scale = isScaleHeight ?
+				(float)REF_HEIGHT / image.Height : (float)REF_WIDTH / image.Width;
+			if(isScaleHeight)
+				newWidth = (int)(image.Width * scale);
+			else
+				newHeight = (int)(image.Height * scale);
+
+
+			image = image.Resize(newWidth, newHeight, Emgu.CV.CvEnum.Inter.Linear);
+			inputImage = new Image<Bgr, byte>(REF_WIDTH, REF_HEIGHT, new Bgr(255, 0, 0));
+
+			//calculate border difference
+			int borderDiff = isScaleHeight ?
+				(REF_WIDTH - newWidth) / 2 : (REF_HEIGHT - newHeight) / 2;
+			//https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html#copymakeborder
+			//the borders need to match exactly so if halfWidth is not even number, we have to 
+			//calculate the remain
+			int borderDiffRest = (isScaleHeight ? REF_WIDTH - image.Size.Width : REF_HEIGHT - image.Size.Height) - borderDiff;
+
+			int top = isScaleHeight ? 0 : borderDiff;
+			int bot = isScaleHeight ? 0 : borderDiffRest;
+			int right = isScaleHeight ? borderDiff : 0;
+			int left = isScaleHeight ? borderDiffRest : 0;
+			//todo: make input
+			MCvScalar whiteBg = new MCvScalar(255, 255, 255);
+			CvInvoke.CopyMakeBorder(image, inputImage, top, bot, left, right,
+				Emgu.CV.CvEnum.BorderType.Constant, whiteBg);
+			visuals.SetInputImage(inputImage.AsBitmap());
 		}
 
 		private void SetOutputEyes()
