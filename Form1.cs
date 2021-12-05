@@ -24,13 +24,15 @@ namespace Selfie1
 		Visuals visuals;
 		SaveLoad saveLoad;
 		BulkInputManager bulkInput;
+		Detection detection;
 
 		public Form1()
 		{
 			InitializeComponent();
 
-			visuals = new Visuals(pictureBox_Input, pictureBox_Output, pictureBox_EyeLeft, pictureBox_EyeRight);
-			manualInput = new ManualInput(visuals);
+			visuals = new Visuals(this);
+			detection = new Detection(visuals);
+			manualInput = new ManualInput(visuals, detection);
 			saveLoad = new SaveLoad(manualInput);
 			bulkInput = new BulkInputManager(manualInput);
 
@@ -93,7 +95,7 @@ namespace Selfie1
 
 			filename = "_0000_IMG_20171101_091405.jpg";
 			filename = "IMG_20210413_222434.jpg";
-			//filename = "IMG_20211113_150047_resize_2912.jpg";
+			filename = "IMG_20190610_104519.jpg";
 
 			FileInfo file = new FileInfo(img_folder + filename);
 

@@ -28,11 +28,15 @@ namespace Selfie1
 		PointF outputEyeLeft; // 836/1920
 		PointF outputEyeRight; // 1086/1920
 
-		public ManualInput(Visuals visuals)
+
+		//bool isSetingLeft = true;
+		private Visuals visuals;
+		private Detection detection;
+
+		public ManualInput(Visuals visuals, Detection detection)
 		{
 			this.visuals = visuals;
-
-
+			this.detection = detection;
 		}
 
 		internal Bitmap GetOutputBitmap()
@@ -58,6 +62,8 @@ namespace Selfie1
 			//set some init pos
 			SetInputLeftEye(287, 167);
 			SetInputRightEye(363, 167);
+
+			detection.DetectEyesHaar(image);
 		}
 
 
@@ -146,8 +152,6 @@ namespace Selfie1
 		}
 
 
-		//bool isSetingLeft = true;
-		private Visuals visuals;
 
 		internal void OnClick_Input(MouseEventArgs mouseEventArgs)
 		{
