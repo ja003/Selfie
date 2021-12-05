@@ -55,14 +55,36 @@ namespace Selfie1
 			RefreshEyeCrop(inputImage, eyeRightPos, false);
 		}
 
-		internal void SetDebug1b(Bitmap bitmap)
+		internal void SetDebug(int index, bool isA, Bitmap bitmap)
 		{
-			form.pictureBox_debug1b.Image = bitmap;
-		}
-
-		internal void SetDebug1(Bitmap bitmap)
-		{
-			form.pictureBox_debug1.Image = bitmap;
+			switch(index)
+			{
+				case 1:
+					if(isA)
+						form.pictureBox_debug1.Image = bitmap;
+					else
+						form.pictureBox_debug1b.Image = bitmap;
+					return;
+				case 2:
+					if(isA)
+						form.pictureBox_debug2.Image = bitmap;
+					else
+						form.pictureBox_debug2b.Image = bitmap;
+					return;
+				case 3:
+					if(isA)
+						form.pictureBox_debug3.Image = bitmap;
+					else
+						form.pictureBox_debug3b.Image = bitmap;
+					return;
+				case 4:
+					if(isA)
+						form.pictureBox_debug4.Image = bitmap;
+					else
+						form.pictureBox_debug4b.Image = bitmap;
+					return;
+			}
+			Debug.WriteLine("Invalid SetDebug");
 		}
 
 		/// <summary>
