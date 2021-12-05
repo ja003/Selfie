@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Selfie1
 {
 	/// <summary>
-	/// todo: ilustrate
+	/// _________________________________
+	/// |								|
+	/// |								|
+	/// |								|
+	/// |								|
+	/// |		____Range___			|
+	/// |		|			|			|
+	/// |		|	<Pupil>	|			|
+	/// |		|___________|			|
+	/// |								|
+	/// |								|
+	/// |_______________________________|
 	/// </summary>
 	class Eye
 	{
