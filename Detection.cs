@@ -20,7 +20,7 @@ namespace Selfie1
 			this.visuals = visuals;
 		}
 
-		public Image DetectEyesHaar(Image<Bgr, byte> imgInput)
+		public Tuple<Eye, Eye> DetectEyesHaar(Image<Bgr, byte> imgInput)
 		{
 			try
 			{
@@ -39,24 +39,25 @@ namespace Selfie1
 					Debug.WriteLine("invalid eyes count detected - " + eyes.Length);
 				}
 
-				Point eye1;
-				Point eye2;
+				Tuple<Eye, Eye> result = new Tuple<Eye, Eye>(new Eye(), new Eye());
 				if(eyes.Length >= 1)
 				{
+					result.Item1.Range = eyes[0];
 					var imgInputCopy = imgInput.Copy();
 					imgInputCopy.Draw(eyes[0], new Bgr(255, 0, 0), 5);
 					visuals.SetDebug1(imgInputCopy.AsBitmap());
-					eye1 = DetectPupil(imgGray, eyes[0], 0);
+					result.Item1.Pupil = DetectPupil(imgGray, eyes[0], 0);
 				}
 				if(eyes.Length >= 2)
 				{
+					result.Item2.Range = eyes[1];
 					var imgInputCopy = imgInput.Copy();
 					imgInputCopy.Draw(eyes[1], new Bgr(255, 0, 0), 5);
 					visuals.SetDebug1b(imgInputCopy.AsBitmap());
-					eye2 = DetectPupil(imgGray, eyes[1], 1);
+					result.Item2.Pupil = DetectPupil(imgGray, eyes[1], 1);
 				}
 
-				return imgInput.AsBitmap();
+				return result;
 
 			}
 			catch(Exception ex)
