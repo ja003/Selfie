@@ -53,6 +53,9 @@ namespace Selfie1
 		{
 			InputImageFile = file;
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
+
+			visuals.Reset();
+
 			var formatedImage = SetInputImage(image);
 
 			outputImage = inputImage.CopyBlank();

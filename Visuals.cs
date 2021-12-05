@@ -55,6 +55,20 @@ namespace Selfie1
 			RefreshEyeCrop(inputImage, eyeRightPos, false);
 		}
 
+		internal void Reset()
+		{
+			form.pictureBox_EyeLeft.Image = null;
+			form.pictureBox_EyeRight.Image = null;
+			form.pictureBox_Input.Image = null;
+			form.pictureBox_Output.Image = null;
+
+			for(int i = 1; i <= 4; i++)
+			{
+				SetDebug(i, true, null);
+				SetDebug(i, false, null);
+			}
+		}
+
 		internal void SetDebug(int index, bool isA, Bitmap bitmap)
 		{
 			switch(index)
