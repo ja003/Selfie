@@ -66,7 +66,7 @@ namespace Selfie1
 			}
 		}
 
-		private Point DetectPupil(Image<Gray, byte> pSourceImg, Rectangle pEye, int pEyeIndex)
+		private Point? DetectPupil(Image<Gray, byte> pSourceImg, Rectangle pEye, int pEyeIndex)
 		{
 			//imgInput.Draw(pEye, new Bgr(0, 0, 255), 4);
 			Cross2DF eyeCenter = new Cross2DF(new PointF(pEye.X + pEye.Width / 2, pEye.Y + pEye.Height / 2), 20, 20);
@@ -99,7 +99,7 @@ namespace Selfie1
 			const int minDist = 5;
 			var circlesChannels = threshold.HoughCircles(new Gray(cannyThreshold), new Gray(accumulatorThreshold), dp, minDist, minRadius, maxRadius);
 
-			var pupil = eyeImg.Copy();
+			Image<Gray, byte> pupil = eyeImg.Copy();
 			foreach(var circleChannel in circlesChannels)
 			{
 				foreach(var circle in circleChannel)
@@ -114,7 +114,7 @@ namespace Selfie1
 			//pictureBoxEye_c.Image = pupil.AsBitmap();
 
 
-			return new Point();
+			return null;
 		}
 
 		//public void DetectFaceHaar()

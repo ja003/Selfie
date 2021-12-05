@@ -60,13 +60,15 @@ namespace Selfie1
 			SetOutputEyes();
 
 			//set some init pos
-			SetInputLeftEye(287, 167, true);
-			SetInputRightEye(363, 167, true);
+			//SetInputLeftEye(287, 167, true);
+			//SetInputRightEye(363, 167, true);
 
 			var eyes = detection.DetectEyesHaar(formatedImage);
-			SetInputLeftEye(eyes.Item1);
-			SetInputRightEye(eyes.Item2);
+			SetInputEyes(eyes);
+			//SetInputEye(eyes.Item1, true);
+			//SetInputEye(eyes.Item2, false);
 		}
+
 
 
 		/// <summary>
@@ -195,14 +197,44 @@ namespace Selfie1
 		}
 
 
-		private void SetInputLeftEye(Eye eye)
+
+		private void SetInputEyes(Tuple<Eye, Eye> eyes)
 		{
-			SetInputLeftEye(eye.RangeCenter.X, eye.RangeCenter.Y, false);
+			Point eyeCenter1 = default;
+			Point eyeCenter2 = default;
+			eyes.Item1.GetRangeCenter(ref eyeCenter1);
+			eyes.Item2.GetRangeCenter(ref eyeCenter2);
+			bool isFirstLeft = eyeCenter1.X < eyeCenter2.X;
+			SetInputEye(eyes.Item1, isFirstLeft);
+			SetInputEye(eyes.Item2, !isFirstLeft);
 		}
-		private void SetInputRightEye(Eye eye)
+
+		private void SetInputEye(Eye eye, bool isLeft)
 		{
-			SetInputRightEye(eye.RangeCenter.X, eye.RangeCenter.Y, false);
+			Point eyeCenter = default;
+			Point pupil = default;
+			if(eye.GetPupil(ref pupil))
+			{
+				if(isLeft)
+					SetInputLeftEye(pupil.X, pupil.Y, false);
+				else
+					SetInputRightEye(pupil.X, pupil.Y, false);
+
+			}
+			else if(eye.GetRangeCenter(ref eyeCenter))
+			{
+				Debug.WriteLine("Eye detected but not pupil");
+				if(isLeft)
+					SetInputLeftEye(eyeCenter.X, eyeCenter.Y, false);
+				else
+					SetInputRightEye(eyeCenter.X, eyeCenter.Y, false);
+			}
+			else
+			{
+				Debug.WriteLine("Eye not detected");
+			}
 		}
+
 		private void SetInputLeftEye(int x, int y, bool convertFromPictureToImage)
 		{
 			if(convertFromPictureToImage)
