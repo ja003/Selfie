@@ -24,13 +24,15 @@ namespace Selfie1
 		Visuals visuals;
 		SaveLoad saveLoad;
 		BulkInputManager bulkInput;
+		Detection detection;
 
 		public Form1()
 		{
 			InitializeComponent();
 
-			visuals = new Visuals(pictureBox_Input, pictureBox_Output, pictureBox_EyeLeft, pictureBox_EyeRight);
-			manualInput = new ManualInput(visuals);
+			visuals = new Visuals(this);
+			detection = new Detection(visuals);
+			manualInput = new ManualInput(visuals, detection);
 			saveLoad = new SaveLoad(manualInput);
 			bulkInput = new BulkInputManager(manualInput);
 
@@ -46,10 +48,10 @@ namespace Selfie1
 					manualInput.Apply();
 					saveLoad.Save();
 					break;
-				case Keys.V:
+				case Keys.F1:
 					saveLoad.Save();
 					break;
-				case Keys.C:
+				case Keys.F2:
 					manualInput.Apply();
 					break;
 
@@ -91,9 +93,9 @@ namespace Selfie1
 			string filename = "IMG_20211113_150047_resize_1920.jpg";
 			filename = "IMG_20190610_104519.jpg"; //[1784,1125]/(4160,2340)
 
-			filename = "_0000_IMG_20171101_091405.jpg";
 			filename = "IMG_20210413_222434.jpg";
-			//filename = "IMG_20211113_150047_resize_2912.jpg";
+			filename = "IMG_20190610_104519.jpg";
+			filename = "_0000_IMG_20171101_091405.jpg";
 
 			FileInfo file = new FileInfo(img_folder + filename);
 
@@ -118,6 +120,8 @@ namespace Selfie1
 		private void pictureBox_Input_Click(object sender, EventArgs e)
 		{
 			var mouseEventArgs = e as MouseEventArgs;
+			pictureBox_Input.Focus();
+
 			if(mouseEventArgs != null)
 				manualInput.OnClick_Input(mouseEventArgs);
 			else

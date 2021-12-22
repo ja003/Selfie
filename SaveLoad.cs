@@ -49,6 +49,12 @@ namespace Selfie1
 
 		internal void Save()
 		{
+			if(!manualInput.IsInputValid)
+			{
+				Debug.WriteLine("Input is not valid");
+				return;
+			}
+
 			if(jpegCodec == null)
 			{
 				Debug.WriteLine("no jpeg codec");

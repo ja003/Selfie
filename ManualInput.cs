@@ -16,8 +16,8 @@ namespace Selfie1
 	class ManualInput
 	{
 		//todo: make customizable
-		private const int REF_WIDTH = 1920;
-		private const int REF_HEIGHT = 1080;
+		public const int REF_WIDTH = 1920;
+		public const int REF_HEIGHT = 1080;
 		Image<Bgr, byte> inputImage;
 		Image<Bgr, byte> outputImage;
 		public FileInfo InputImageFile { get; private set; }
@@ -28,11 +28,17 @@ namespace Selfie1
 		PointF outputEyeLeft; // 836/1920
 		PointF outputEyeRight; // 1086/1920
 
-		public ManualInput(Visuals visuals)
+
+		//bool isSetingLeft = true;
+		private Visuals visuals;
+		private Detection detection;
+
+		public bool IsInputValid;
+
+		public ManualInput(Visuals visuals, Detection detection)
 		{
 			this.visuals = visuals;
-
-
+			this.detection = detection;
 		}
 
 		internal Bitmap GetOutputBitmap()
@@ -43,28 +49,60 @@ namespace Selfie1
 		//internal void SetInput(Image<Bgr, byte> image, string fileName)
 		internal void SetInput(string filePath)
 		{
-			SetInput(new FileInfo(filePath));
+			try
+			{
+				SetInput(new FileInfo(filePath));
+			}
+			catch(Exception e)
+			{
+				SetInputInvalid();
+			}
 		}
+
+		private void SetInputInvalid()
+		{
+			IsInputValid = false;
+			visuals.SetInputImage(null);
+			Debug.WriteLine("SetInputInvalid");
+		}
+
 		internal void SetInput(FileInfo file)
 		{
 			InputImageFile = file;
+			IsInputValid = file.Exists;
+			if(!file.Exists)
+			{
+				SetInputInvalid();
+				return;
+			}
+
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
-			SetInputImage(image);
+
+			visuals.Reset();
+
+			var formatedImage = SetInputImage(image);
 
 			outputImage = inputImage.CopyBlank();
 
 			SetOutputEyes();
 
 			//set some init pos
-			SetInputLeftEye(287, 167);
-			SetInputRightEye(363, 167);
+			//SetInputLeftEye(287, 167, true);
+			//SetInputRightEye(363, 167, true);
+
+			var eyes = detection.DetectEyesHaar(formatedImage);
+			SetInputEyes(eyes);
+			//SetInputEye(eyes.Item1, true);
+			//SetInputEye(eyes.Item2, false);
 		}
 
 
+
 		/// <summary>
-		/// Format input image to fit ref width and height
+		/// Format input image to fit ref width and height.
+		/// Returns the formated image.
 		/// </summary>
-		void SetInputImage(Image<Bgr, byte> image)
+		Image<Bgr, byte> SetInputImage(Image<Bgr, byte> image)
 		{
 			//detect if we will scale image to fit ref height or width
 			float imageAspectRatio = (float)image.Size.Width / image.Size.Height;
@@ -120,6 +158,7 @@ namespace Selfie1
 			CvInvoke.CopyMakeBorder(image, inputImage, top, bot, left, right,
 				Emgu.CV.CvEnum.BorderType.Constant, whiteBg);
 			visuals.SetInputImage(inputImage.AsBitmap());
+			return inputImage;
 		}
 
 		private void SetOutputEyes()
@@ -146,8 +185,6 @@ namespace Selfie1
 		}
 
 
-		//bool isSetingLeft = true;
-		private Visuals visuals;
 
 		internal void OnClick_Input(MouseEventArgs mouseEventArgs)
 		{
@@ -156,11 +193,11 @@ namespace Selfie1
 			bool isSetingLeft = visuals.IsOnInputPictureLeftSide(mouseEventArgs.X);
 			if(isSetingLeft)
 			{
-				SetInputLeftEye(mouseEventArgs.X, mouseEventArgs.Y);
+				SetInputLeftEye(mouseEventArgs.X, mouseEventArgs.Y, true);
 			}
 			else
 			{
-				SetInputRightEye(mouseEventArgs.X, mouseEventArgs.Y);
+				SetInputRightEye(mouseEventArgs.X, mouseEventArgs.Y, true);
 			}
 			//isSetingLeft = !isSetingLeft;
 
@@ -186,20 +223,65 @@ namespace Selfie1
 			RefreshEyeVisuals();
 		}
 
-		private void SetInputLeftEye(int inputPictureCoordX, int inputPictureCoordY)
+
+
+		private void SetInputEyes(Tuple<Eye, Eye> eyes)
 		{
-			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
-			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
-			inputEyeLeft = new PointF(imageCoordX, imageCoordY);
+			Point eyeCenter1 = default;
+			Point eyeCenter2 = default;
+			eyes.Item1.GetRangeCenter(ref eyeCenter1);
+			eyes.Item2.GetRangeCenter(ref eyeCenter2);
+			bool isFirstLeft = eyeCenter1.X < eyeCenter2.X;
+			SetInputEye(eyes.Item1, isFirstLeft);
+			SetInputEye(eyes.Item2, !isFirstLeft);
+		}
+
+		private void SetInputEye(Eye eye, bool isLeft)
+		{
+			Point eyeCenter = default;
+			Point pupil = default;
+			if(eye.GetPupil(ref pupil))
+			{
+				if(isLeft)
+					SetInputLeftEye(pupil.X, pupil.Y, false);
+				else
+					SetInputRightEye(pupil.X, pupil.Y, false);
+
+			}
+			else if(eye.GetRangeCenter(ref eyeCenter))
+			{
+				Debug.WriteLine("Eye detected but not pupil");
+				if(isLeft)
+					SetInputLeftEye(eyeCenter.X, eyeCenter.Y, false);
+				else
+					SetInputRightEye(eyeCenter.X, eyeCenter.Y, false);
+			}
+			else
+			{
+				Debug.WriteLine("Eye not detected");
+			}
+		}
+
+		private void SetInputLeftEye(int x, int y, bool convertFromPictureToImage)
+		{
+			if(convertFromPictureToImage)
+			{
+				x = visuals.ConvertInputPictureCoordXToImage(x);
+				y = visuals.ConvertInputPictureCoordYToImage(y);
+			}
+			inputEyeLeft = new PointF(x, y);
 			RefreshEyeVisuals();
 		}
 
 
-		private void SetInputRightEye(int inputPictureCoordX, int inputPictureCoordY)
+		private void SetInputRightEye(int x, int y, bool convertFromPictureToImage)
 		{
-			int imageCoordX = visuals.ConvertInputPictureCoordXToImage(inputPictureCoordX);
-			int imageCoordY = visuals.ConvertInputPictureCoordYToImage(inputPictureCoordY);
-			inputEyeRight = new PointF(imageCoordX, imageCoordY);
+			if(convertFromPictureToImage)
+			{
+				x = visuals.ConvertInputPictureCoordXToImage(x);
+				y = visuals.ConvertInputPictureCoordYToImage(y);
+			}
+			inputEyeRight = new PointF(x, y);
 			RefreshEyeVisuals();
 		}
 
@@ -238,6 +320,9 @@ namespace Selfie1
 
 		public void Apply()
 		{
+			if(!IsInputValid)
+				return;
+
 			ApplyTransform();
 
 			//visuals.SetOutputImage(outputImage.AsBitmap());
