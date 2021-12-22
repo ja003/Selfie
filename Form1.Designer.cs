@@ -49,6 +49,7 @@ namespace Selfie1
 			this.pictureBox_debug3b = new System.Windows.Forms.PictureBox();
 			this.pictureBox_debug2b = new System.Windows.Forms.PictureBox();
 			this.pictureBox_debug1b = new System.Windows.Forms.PictureBox();
+			this.num_CurrentIndex = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).BeginInit();
 			this.menuStrip1.SuspendLayout();
@@ -62,6 +63,7 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug3b)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug2b)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug1b)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.num_CurrentIndex)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox_Input
@@ -244,11 +246,29 @@ namespace Selfie1
 			this.pictureBox_debug1b.TabIndex = 21;
 			this.pictureBox_debug1b.TabStop = false;
 			// 
+			// num_CurrentIndex
+			// 
+			this.num_CurrentIndex.Location = new System.Drawing.Point(1255, 435);
+			this.num_CurrentIndex.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.num_CurrentIndex.Name = "num_CurrentIndex";
+			this.num_CurrentIndex.Size = new System.Drawing.Size(45, 23);
+			this.num_CurrentIndex.TabIndex = 25;
+			this.num_CurrentIndex.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1322, 812);
+			this.Controls.Add(this.num_CurrentIndex);
 			this.Controls.Add(this.pictureBox_debug4b);
 			this.Controls.Add(this.pictureBox_debug3b);
 			this.Controls.Add(this.pictureBox_debug2b);
@@ -284,6 +304,7 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug3b)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug2b)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug1b)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.num_CurrentIndex)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -310,6 +331,7 @@ namespace Selfie1
 		public System.Windows.Forms.PictureBox pictureBox_debug3b;
 		public System.Windows.Forms.PictureBox pictureBox_debug2b;
 		public System.Windows.Forms.PictureBox pictureBox_debug1b;
+		private System.Windows.Forms.NumericUpDown num_CurrentIndex;
 	}
 }
 

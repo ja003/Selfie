@@ -34,7 +34,7 @@ namespace Selfie1
 			detection = new Detection(visuals);
 			manualInput = new ManualInput(visuals, detection);
 			saveLoad = new SaveLoad(manualInput);
-			bulkInput = new BulkInputManager(manualInput);
+			bulkInput = new BulkInputManager(manualInput, num_CurrentIndex);
 
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
@@ -46,10 +46,10 @@ namespace Selfie1
 			{
 				case Keys.Space:
 					manualInput.Apply();
-					saveLoad.Save();
+					saveLoad.Save((int)num_CurrentIndex.Value);
 					break;
 				case Keys.F1:
-					saveLoad.Save();
+					saveLoad.Save((int)num_CurrentIndex.Value);
 					break;
 				case Keys.F2:
 					manualInput.Apply();
@@ -146,7 +146,7 @@ namespace Selfie1
 
 		private void button_Save_Click(object sender, EventArgs e)
 		{
-			saveLoad.Save();
+			saveLoad.Save((int)num_CurrentIndex.Value);
 		}
 
 		private void saveToFolderToolStripMenuItem_Click(object sender, EventArgs e)

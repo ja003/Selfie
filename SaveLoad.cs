@@ -47,7 +47,7 @@ namespace Selfie1
 			return null;
 		}
 
-		internal void Save()
+		internal void Save(int index)
 		{
 			if(!manualInput.IsInputValid)
 			{
@@ -69,10 +69,10 @@ namespace Selfie1
 
 
 			string fileName = manualInput.InputImageFile.Name; //includes .jpg
-			if(BulkInputManager.currentFileIndex >= 0)
+			if(index >= 0)
 			{
 				fileName = Path.GetFileNameWithoutExtension(manualInput.InputImageFile.FullName);
-				fileName += "_" + BulkInputManager.currentFileIndex.ToString("00");
+				fileName += "_" + index.ToString("00");
 				fileName += Path.GetExtension(manualInput.InputImageFile.FullName);
 			}
 
