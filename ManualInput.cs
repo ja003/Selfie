@@ -16,8 +16,8 @@ namespace Selfie1
 	class ManualInput
 	{
 		//todo: make customizable
-		private const int REF_WIDTH = 1920;
-		private const int REF_HEIGHT = 1080;
+		public const int REF_WIDTH = 1920;
+		public const int REF_HEIGHT = 1080;
 		Image<Bgr, byte> inputImage;
 		Image<Bgr, byte> outputImage;
 		public FileInfo InputImageFile { get; private set; }

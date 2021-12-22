@@ -35,12 +35,28 @@ namespace Selfie1
 				Rectangle[] eyes = classifier.DetectMultiScale(imgGray, 1.1, 3, minEyeSize, maxEyeSize);
 
 				Tuple<Eye, Eye> result = GetDefaultEyes();
-				if(eyes.Length != 2)
+
+				if(eyes.Length == 0)
 				{
-					Debug.WriteLine("invalid eyes count detected - " + eyes.Length);
+					Debug.WriteLine("no eye detected");
 					return result;
 				}
-
+				if(eyes.Length == 1)
+				{
+					Debug.WriteLine("only 1 eye detected");
+					Rectangle tmpEye = eyes[0];
+					eyes = new Rectangle[2];
+					eyes[0] = tmpEye;
+					//create a mirrored 2nd eye
+					int xDiffFromMid = ManualInput.REF_WIDTH / 2 - tmpEye.X;
+					tmpEye.X += 2 * xDiffFromMid;
+					tmpEye.X -= Math.Sign(xDiffFromMid) * tmpEye.Width;
+					eyes[1] = tmpEye;
+				}
+				else if(eyes.Length > 2)
+				{
+					Debug.WriteLine("too many eyes detected - " + eyes.Length);
+				}
 				
 
 				Rectangle eyeLeftRange = eyes[0].X < eyes[1].X ? eyes[0] : eyes[1];
@@ -90,6 +106,7 @@ namespace Selfie1
 			}
 		}
 
+		//todo: some default value
 		private static Tuple<Eye, Eye> GetDefaultEyes()
 		{
 			return new Tuple<Eye, Eye>(new Eye(), new Eye());

@@ -93,9 +93,9 @@ namespace Selfie1
 			string filename = "IMG_20211113_150047_resize_1920.jpg";
 			filename = "IMG_20190610_104519.jpg"; //[1784,1125]/(4160,2340)
 
-			filename = "_0000_IMG_20171101_091405.jpg";
 			filename = "IMG_20210413_222434.jpg";
 			filename = "IMG_20190610_104519.jpg";
+			filename = "_0000_IMG_20171101_091405.jpg";
 
 			FileInfo file = new FileInfo(img_folder + filename);
 
