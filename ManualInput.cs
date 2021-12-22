@@ -33,6 +33,8 @@ namespace Selfie1
 		private Visuals visuals;
 		private Detection detection;
 
+		public bool IsInputValid;
+
 		public ManualInput(Visuals visuals, Detection detection)
 		{
 			this.visuals = visuals;
@@ -47,11 +49,33 @@ namespace Selfie1
 		//internal void SetInput(Image<Bgr, byte> image, string fileName)
 		internal void SetInput(string filePath)
 		{
-			SetInput(new FileInfo(filePath));
+			try
+			{
+				SetInput(new FileInfo(filePath));
+			}
+			catch(Exception e)
+			{
+				SetInputInvalid();
+			}
 		}
+
+		private void SetInputInvalid()
+		{
+			IsInputValid = false;
+			visuals.SetInputImage(null);
+			Debug.WriteLine("SetInputInvalid");
+		}
+
 		internal void SetInput(FileInfo file)
 		{
 			InputImageFile = file;
+			IsInputValid = file.Exists;
+			if(!file.Exists)
+			{
+				SetInputInvalid();
+				return;
+			}
+
 			Image<Bgr, byte> image = new Image<Bgr, byte>(file.FullName);
 
 			visuals.Reset();
@@ -296,6 +320,9 @@ namespace Selfie1
 
 		public void Apply()
 		{
+			if(!IsInputValid)
+				return;
+
 			ApplyTransform();
 
 			//visuals.SetOutputImage(outputImage.AsBitmap());

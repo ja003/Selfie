@@ -48,10 +48,10 @@ namespace Selfie1
 					manualInput.Apply();
 					saveLoad.Save();
 					break;
-				case Keys.V:
+				case Keys.F1:
 					saveLoad.Save();
 					break;
-				case Keys.C:
+				case Keys.F2:
 					manualInput.Apply();
 					break;
 
@@ -120,6 +120,8 @@ namespace Selfie1
 		private void pictureBox_Input_Click(object sender, EventArgs e)
 		{
 			var mouseEventArgs = e as MouseEventArgs;
+			pictureBox_Input.Focus();
+
 			if(mouseEventArgs != null)
 				manualInput.OnClick_Input(mouseEventArgs);
 			else

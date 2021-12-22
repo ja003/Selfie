@@ -23,6 +23,8 @@ namespace Selfie1
 
 		internal void SetInputFolder(string path)
 		{
+			currentFileIndex = -1;
+
 			if(!Directory.Exists(path))
 			{
 				Debug.WriteLine($"path {path} does not exist");
@@ -48,6 +50,7 @@ namespace Selfie1
 			{
 				Debug.WriteLine("no next file to process");
 				currentFileIndex = -1;
+				manualInput.SetInput("");
 				return;
 			}
 			ProcessFile(inputFiles[currentFileIndex]);
