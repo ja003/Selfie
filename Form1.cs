@@ -33,7 +33,7 @@ namespace Selfie1
 			visuals = new Visuals(this);
 			detection = new Detection(visuals);
 			manualInput = new ManualInput(visuals, detection);
-			saveLoad = new SaveLoad(manualInput);
+			saveLoad = new SaveLoad(manualInput, textBox_OutputName);
 			bulkInput = new BulkInputManager(manualInput, num_CurrentIndex);
 
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);

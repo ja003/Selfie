@@ -6,12 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Selfie1
 {
 	class SaveLoad
 	{
 		private ManualInput manualInput;
+		private TextBox textBox_OutputName;
 		EncoderParameters encoderParams;
 		ImageCodecInfo jpegCodec;
 
@@ -19,9 +21,10 @@ namespace Selfie1
 
 		static public Action OnSave;
 
-		public SaveLoad(ManualInput manualInput)
+		public SaveLoad(ManualInput manualInput, TextBox textBox_OutputName)
 		{
 			this.manualInput = manualInput;
+			this.textBox_OutputName = textBox_OutputName;
 
 			// Encoder parameter for image quality
 
@@ -68,10 +71,16 @@ namespace Selfie1
 
 
 
-			string fileName = manualInput.InputImageFile.Name; //includes .jpg
+			bool useFileName = textBox_OutputName.Text.Length == 0;
+			string fileName = useFileName ?
+				manualInput.InputImageFile.Name : //includes .jpg
+				textBox_OutputName.Text;
+
 			if(index >= 0)
 			{
-				fileName = Path.GetFileNameWithoutExtension(manualInput.InputImageFile.FullName);
+				fileName = useFileName ? 
+					Path.GetFileNameWithoutExtension(manualInput.InputImageFile.FullName) :
+					fileName;
 				fileName += "_" + index.ToString("00");
 				fileName += Path.GetExtension(manualInput.InputImageFile.FullName);
 			}

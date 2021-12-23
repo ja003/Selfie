@@ -50,6 +50,7 @@ namespace Selfie1
 			this.pictureBox_debug2b = new System.Windows.Forms.PictureBox();
 			this.pictureBox_debug1b = new System.Windows.Forms.PictureBox();
 			this.num_CurrentIndex = new System.Windows.Forms.NumericUpDown();
+			this.textBox_OutputName = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).BeginInit();
 			this.menuStrip1.SuspendLayout();
@@ -263,11 +264,19 @@ namespace Selfie1
             0,
             -2147483648});
 			// 
+			// textBox_OutputName
+			// 
+			this.textBox_OutputName.Location = new System.Drawing.Point(1055, 434);
+			this.textBox_OutputName.Name = "textBox_OutputName";
+			this.textBox_OutputName.Size = new System.Drawing.Size(194, 23);
+			this.textBox_OutputName.TabIndex = 26;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1322, 812);
+			this.Controls.Add(this.textBox_OutputName);
 			this.Controls.Add(this.num_CurrentIndex);
 			this.Controls.Add(this.pictureBox_debug4b);
 			this.Controls.Add(this.pictureBox_debug3b);
@@ -332,6 +341,7 @@ namespace Selfie1
 		public System.Windows.Forms.PictureBox pictureBox_debug2b;
 		public System.Windows.Forms.PictureBox pictureBox_debug1b;
 		private System.Windows.Forms.NumericUpDown num_CurrentIndex;
+		private System.Windows.Forms.TextBox textBox_OutputName;
 	}
 }
 

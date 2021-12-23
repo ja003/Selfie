@@ -30,6 +30,7 @@ namespace Selfie1
 
 			if(!Directory.Exists(path))
 			{
+				manualInput.SetInputInvalid();
 				Debug.WriteLine($"path {path} does not exist");
 				return;
 			}
@@ -37,17 +38,19 @@ namespace Selfie1
 
 			if(inputFolder.GetFiles().Length == 0)
 			{
+				manualInput.SetInputInvalid();
 				Debug.WriteLine($"there are no files");
 				return;
 			}
 
+			manualInput.IsInputValid = true;
 			inputFiles = inputFolder.GetFiles();
 			ProcessNextFile();
 		}
 
 		public void ProcessNextFile()
 		{
-			if(num_CurrentIndex.Value < 0)
+			if(!manualInput.IsInputValid)
 			{
 				Debug.WriteLine("dont ProcessNextFile");
 				return;

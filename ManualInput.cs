@@ -59,7 +59,7 @@ namespace Selfie1
 			}
 		}
 
-		private void SetInputInvalid()
+		public void SetInputInvalid()
 		{
 			IsInputValid = false;
 			visuals.SetInputImage(null);
