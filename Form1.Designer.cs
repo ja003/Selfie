@@ -38,6 +38,13 @@ namespace Selfie1
 			this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.folderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.wASDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.arrowsMoveRightEyeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.sHIFTToggleSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.sPACEApplySaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.f1SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.f2ApplyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.button_Save = new System.Windows.Forms.Button();
 			this.textBox_OutputFolder = new System.Windows.Forms.TextBox();
 			this.pictureBox_EyeLeft = new System.Windows.Forms.PictureBox();
@@ -53,6 +60,7 @@ namespace Selfie1
 			this.num_CurrentIndex = new System.Windows.Forms.NumericUpDown();
 			this.textBox_OutputName = new System.Windows.Forms.TextBox();
 			this.icon_exlMark = new System.Windows.Forms.PictureBox();
+			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).BeginInit();
 			this.menuStrip1.SuspendLayout();
@@ -108,7 +116,8 @@ namespace Selfie1
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.folderToolStripMenuItem1,
-            this.saveToFolderToolStripMenuItem});
+            this.saveToFolderToolStripMenuItem,
+            this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(1322, 24);
@@ -144,6 +153,55 @@ namespace Selfie1
 			this.saveToFolderToolStripMenuItem.Text = "Save to folder";
 			this.saveToFolderToolStripMenuItem.Click += new System.EventHandler(this.saveToFolderToolStripMenuItem_Click);
 			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wASDToolStripMenuItem,
+            this.arrowsMoveRightEyeToolStripMenuItem,
+            this.sHIFTToggleSpeedToolStripMenuItem,
+            this.sPACEApplySaveToolStripMenuItem,
+            this.f1SaveToolStripMenuItem,
+            this.f2ApplyToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// wASDToolStripMenuItem
+			// 
+			this.wASDToolStripMenuItem.Name = "wASDToolStripMenuItem";
+			this.wASDToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+			this.wASDToolStripMenuItem.Text = "WASD = move left eye";
+			// 
+			// arrowsMoveRightEyeToolStripMenuItem
+			// 
+			this.arrowsMoveRightEyeToolStripMenuItem.Name = "arrowsMoveRightEyeToolStripMenuItem";
+			this.arrowsMoveRightEyeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+			this.arrowsMoveRightEyeToolStripMenuItem.Text = "arrows = move right eye";
+			// 
+			// sHIFTToggleSpeedToolStripMenuItem
+			// 
+			this.sHIFTToggleSpeedToolStripMenuItem.Name = "sHIFTToggleSpeedToolStripMenuItem";
+			this.sHIFTToggleSpeedToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+			this.sHIFTToggleSpeedToolStripMenuItem.Text = "SHIFT = toggle speed";
+			// 
+			// sPACEApplySaveToolStripMenuItem
+			// 
+			this.sPACEApplySaveToolStripMenuItem.Name = "sPACEApplySaveToolStripMenuItem";
+			this.sPACEApplySaveToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+			this.sPACEApplySaveToolStripMenuItem.Text = "SPACE = apply + save";
+			// 
+			// f1SaveToolStripMenuItem
+			// 
+			this.f1SaveToolStripMenuItem.Name = "f1SaveToolStripMenuItem";
+			this.f1SaveToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+			this.f1SaveToolStripMenuItem.Text = "F1 = save";
+			// 
+			// f2ApplyToolStripMenuItem
+			// 
+			this.f2ApplyToolStripMenuItem.Name = "f2ApplyToolStripMenuItem";
+			this.f2ApplyToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+			this.f2ApplyToolStripMenuItem.Text = "F2 = apply";
+			// 
 			// button_Save
 			// 
 			this.button_Save.Location = new System.Drawing.Point(661, 405);
@@ -164,17 +222,17 @@ namespace Selfie1
 			// 
 			// pictureBox_EyeLeft
 			// 
-			this.pictureBox_EyeLeft.Location = new System.Drawing.Point(146, 405);
+			this.pictureBox_EyeLeft.Location = new System.Drawing.Point(346, 482);
 			this.pictureBox_EyeLeft.Name = "pictureBox_EyeLeft";
-			this.pictureBox_EyeLeft.Size = new System.Drawing.Size(108, 62);
+			this.pictureBox_EyeLeft.Size = new System.Drawing.Size(307, 154);
 			this.pictureBox_EyeLeft.TabIndex = 15;
 			this.pictureBox_EyeLeft.TabStop = false;
 			// 
 			// pictureBox_EyeRight
 			// 
-			this.pictureBox_EyeRight.Location = new System.Drawing.Point(304, 405);
+			this.pictureBox_EyeRight.Location = new System.Drawing.Point(661, 482);
 			this.pictureBox_EyeRight.Name = "pictureBox_EyeRight";
-			this.pictureBox_EyeRight.Size = new System.Drawing.Size(108, 62);
+			this.pictureBox_EyeRight.Size = new System.Drawing.Size(310, 154);
 			this.pictureBox_EyeRight.TabIndex = 16;
 			this.pictureBox_EyeRight.TabStop = false;
 			// 
@@ -189,61 +247,61 @@ namespace Selfie1
 			// 
 			// pictureBox_debug2
 			// 
-			this.pictureBox_debug2.Location = new System.Drawing.Point(343, 482);
+			this.pictureBox_debug2.Location = new System.Drawing.Point(661, 732);
 			this.pictureBox_debug2.Name = "pictureBox_debug2";
-			this.pictureBox_debug2.Size = new System.Drawing.Size(310, 154);
+			this.pictureBox_debug2.Size = new System.Drawing.Size(148, 78);
 			this.pictureBox_debug2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_debug2.TabIndex = 18;
 			this.pictureBox_debug2.TabStop = false;
 			// 
 			// pictureBox_debug3
 			// 
-			this.pictureBox_debug3.Location = new System.Drawing.Point(661, 482);
+			this.pictureBox_debug3.Location = new System.Drawing.Point(661, 642);
 			this.pictureBox_debug3.Name = "pictureBox_debug3";
-			this.pictureBox_debug3.Size = new System.Drawing.Size(310, 154);
+			this.pictureBox_debug3.Size = new System.Drawing.Size(148, 84);
 			this.pictureBox_debug3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_debug3.TabIndex = 19;
 			this.pictureBox_debug3.TabStop = false;
 			// 
 			// pictureBox_debug4
 			// 
-			this.pictureBox_debug4.Location = new System.Drawing.Point(991, 482);
+			this.pictureBox_debug4.Location = new System.Drawing.Point(831, 642);
 			this.pictureBox_debug4.Name = "pictureBox_debug4";
-			this.pictureBox_debug4.Size = new System.Drawing.Size(310, 154);
+			this.pictureBox_debug4.Size = new System.Drawing.Size(140, 84);
 			this.pictureBox_debug4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_debug4.TabIndex = 20;
 			this.pictureBox_debug4.TabStop = false;
 			// 
 			// pictureBox_debug4b
 			// 
-			this.pictureBox_debug4b.Location = new System.Drawing.Point(991, 646);
+			this.pictureBox_debug4b.Location = new System.Drawing.Point(990, 642);
 			this.pictureBox_debug4b.Name = "pictureBox_debug4b";
-			this.pictureBox_debug4b.Size = new System.Drawing.Size(310, 154);
+			this.pictureBox_debug4b.Size = new System.Drawing.Size(145, 84);
 			this.pictureBox_debug4b.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_debug4b.TabIndex = 24;
 			this.pictureBox_debug4b.TabStop = false;
 			// 
 			// pictureBox_debug3b
 			// 
-			this.pictureBox_debug3b.Location = new System.Drawing.Point(661, 646);
+			this.pictureBox_debug3b.Location = new System.Drawing.Point(1159, 642);
 			this.pictureBox_debug3b.Name = "pictureBox_debug3b";
-			this.pictureBox_debug3b.Size = new System.Drawing.Size(310, 154);
+			this.pictureBox_debug3b.Size = new System.Drawing.Size(141, 84);
 			this.pictureBox_debug3b.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_debug3b.TabIndex = 23;
 			this.pictureBox_debug3b.TabStop = false;
 			// 
 			// pictureBox_debug2b
 			// 
-			this.pictureBox_debug2b.Location = new System.Drawing.Point(343, 646);
+			this.pictureBox_debug2b.Location = new System.Drawing.Point(990, 732);
 			this.pictureBox_debug2b.Name = "pictureBox_debug2b";
-			this.pictureBox_debug2b.Size = new System.Drawing.Size(310, 154);
+			this.pictureBox_debug2b.Size = new System.Drawing.Size(145, 78);
 			this.pictureBox_debug2b.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox_debug2b.TabIndex = 22;
 			this.pictureBox_debug2b.TabStop = false;
 			// 
 			// pictureBox_debug1b
 			// 
-			this.pictureBox_debug1b.Location = new System.Drawing.Point(13, 646);
+			this.pictureBox_debug1b.Location = new System.Drawing.Point(990, 482);
 			this.pictureBox_debug1b.Name = "pictureBox_debug1b";
 			this.pictureBox_debug1b.Size = new System.Drawing.Size(310, 154);
 			this.pictureBox_debug1b.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -284,11 +342,20 @@ namespace Selfie1
 			this.icon_exlMark.TabIndex = 27;
 			this.icon_exlMark.TabStop = false;
 			// 
+			// richTextBox1
+			// 
+			this.richTextBox1.Location = new System.Drawing.Point(14, 642);
+			this.richTextBox1.Name = "richTextBox1";
+			this.richTextBox1.Size = new System.Drawing.Size(641, 168);
+			this.richTextBox1.TabIndex = 28;
+			this.richTextBox1.Text = "";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1322, 812);
+			this.ClientSize = new System.Drawing.Size(1322, 821);
+			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.icon_exlMark);
 			this.Controls.Add(this.textBox_OutputName);
 			this.Controls.Add(this.num_CurrentIndex);
@@ -358,6 +425,14 @@ namespace Selfie1
 		private System.Windows.Forms.NumericUpDown num_CurrentIndex;
 		private System.Windows.Forms.TextBox textBox_OutputName;
 		private System.Windows.Forms.PictureBox icon_exlMark;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem wASDToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem arrowsMoveRightEyeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sHIFTToggleSpeedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sPACEApplySaveToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem f1SaveToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem f2ApplyToolStripMenuItem;
+		private System.Windows.Forms.RichTextBox richTextBox1;
 	}
 }
 
