@@ -6,12 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Selfie1
 {
 	class SaveLoad
 	{
 		private ManualInput manualInput;
+		private TextBox textBox_OutputName;
 		EncoderParameters encoderParams;
 		ImageCodecInfo jpegCodec;
 
@@ -19,9 +21,10 @@ namespace Selfie1
 
 		static public Action OnSave;
 
-		public SaveLoad(ManualInput manualInput)
+		public SaveLoad(ManualInput manualInput, TextBox textBox_OutputName)
 		{
 			this.manualInput = manualInput;
+			this.textBox_OutputName = textBox_OutputName;
 
 			// Encoder parameter for image quality
 
@@ -47,7 +50,7 @@ namespace Selfie1
 			return null;
 		}
 
-		internal void Save()
+		internal void Save(int index)
 		{
 			if(!manualInput.IsInputValid)
 			{
@@ -68,11 +71,17 @@ namespace Selfie1
 
 
 
-			string fileName = manualInput.InputImageFile.Name; //includes .jpg
-			if(BulkInputManager.currentFileIndex >= 0)
+			bool useFileName = textBox_OutputName.Text.Length == 0;
+			string fileName = useFileName ?
+				manualInput.InputImageFile.Name : //includes .jpg
+				textBox_OutputName.Text;
+
+			if(index >= 0)
 			{
-				fileName = Path.GetFileNameWithoutExtension(manualInput.InputImageFile.FullName);
-				fileName += "_" + BulkInputManager.currentFileIndex.ToString("00");
+				fileName = useFileName ? 
+					Path.GetFileNameWithoutExtension(manualInput.InputImageFile.FullName) :
+					fileName;
+				fileName += "_" + index.ToString("00");
 				fileName += Path.GetExtension(manualInput.InputImageFile.FullName);
 			}
 
@@ -82,20 +91,22 @@ namespace Selfie1
 			OnSave.Invoke();
 		}
 
-		internal void SetOutputFolder(string path)
+		internal bool SetOutputFolder(string path)
 		{
 			Debug.WriteLine($"SetOutputFolder {path}");
 
 			if(!Directory.Exists(path))
 			{
 				Debug.WriteLine($"path {path} does not exist");
-				return;
+				outputPath = "";
+				return false;
 			}
 
 			outputPath = path;
 
 			PropertyManager.OutputFolder = path;
 			Properties.Settings.Default["outputFolder"] = path;
+			return true;
 		}
 	}
 }

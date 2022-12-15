@@ -29,6 +29,7 @@ namespace Selfie1
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.pictureBox_Input = new System.Windows.Forms.PictureBox();
 			this.pictureBox_Output = new System.Windows.Forms.PictureBox();
 			this.button_Apply = new System.Windows.Forms.Button();
@@ -49,6 +50,9 @@ namespace Selfie1
 			this.pictureBox_debug3b = new System.Windows.Forms.PictureBox();
 			this.pictureBox_debug2b = new System.Windows.Forms.PictureBox();
 			this.pictureBox_debug1b = new System.Windows.Forms.PictureBox();
+			this.num_CurrentIndex = new System.Windows.Forms.NumericUpDown();
+			this.textBox_OutputName = new System.Windows.Forms.TextBox();
+			this.icon_exlMark = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).BeginInit();
 			this.menuStrip1.SuspendLayout();
@@ -62,6 +66,8 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug3b)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug2b)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug1b)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.num_CurrentIndex)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.icon_exlMark)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox_Input
@@ -244,11 +250,48 @@ namespace Selfie1
 			this.pictureBox_debug1b.TabIndex = 21;
 			this.pictureBox_debug1b.TabStop = false;
 			// 
+			// num_CurrentIndex
+			// 
+			this.num_CurrentIndex.Location = new System.Drawing.Point(1255, 435);
+			this.num_CurrentIndex.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.num_CurrentIndex.Name = "num_CurrentIndex";
+			this.num_CurrentIndex.Size = new System.Drawing.Size(45, 23);
+			this.num_CurrentIndex.TabIndex = 25;
+			this.num_CurrentIndex.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			// 
+			// textBox_OutputName
+			// 
+			this.textBox_OutputName.Location = new System.Drawing.Point(1055, 434);
+			this.textBox_OutputName.Name = "textBox_OutputName";
+			this.textBox_OutputName.Size = new System.Drawing.Size(194, 23);
+			this.textBox_OutputName.TabIndex = 26;
+			// 
+			// icon_exlMark
+			// 
+			this.icon_exlMark.Image = ((System.Drawing.Image)(resources.GetObject("icon_exlMark.Image")));
+			this.icon_exlMark.Location = new System.Drawing.Point(889, 405);
+			this.icon_exlMark.Name = "icon_exlMark";
+			this.icon_exlMark.Size = new System.Drawing.Size(22, 22);
+			this.icon_exlMark.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.icon_exlMark.TabIndex = 27;
+			this.icon_exlMark.TabStop = false;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1322, 812);
+			this.Controls.Add(this.icon_exlMark);
+			this.Controls.Add(this.textBox_OutputName);
+			this.Controls.Add(this.num_CurrentIndex);
 			this.Controls.Add(this.pictureBox_debug4b);
 			this.Controls.Add(this.pictureBox_debug3b);
 			this.Controls.Add(this.pictureBox_debug2b);
@@ -284,6 +327,8 @@ namespace Selfie1
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug3b)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug2b)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_debug1b)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.num_CurrentIndex)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.icon_exlMark)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -310,6 +355,9 @@ namespace Selfie1
 		public System.Windows.Forms.PictureBox pictureBox_debug3b;
 		public System.Windows.Forms.PictureBox pictureBox_debug2b;
 		public System.Windows.Forms.PictureBox pictureBox_debug1b;
+		private System.Windows.Forms.NumericUpDown num_CurrentIndex;
+		private System.Windows.Forms.TextBox textBox_OutputName;
+		private System.Windows.Forms.PictureBox icon_exlMark;
 	}
 }
 

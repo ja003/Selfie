@@ -33,8 +33,8 @@ namespace Selfie1
 			visuals = new Visuals(this);
 			detection = new Detection(visuals);
 			manualInput = new ManualInput(visuals, detection);
-			saveLoad = new SaveLoad(manualInput);
-			bulkInput = new BulkInputManager(manualInput);
+			saveLoad = new SaveLoad(manualInput, textBox_OutputName);
+			bulkInput = new BulkInputManager(manualInput, num_CurrentIndex);
 
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
@@ -46,10 +46,10 @@ namespace Selfie1
 			{
 				case Keys.Space:
 					manualInput.Apply();
-					saveLoad.Save();
+					saveLoad.Save((int)num_CurrentIndex.Value);
 					break;
 				case Keys.F1:
-					saveLoad.Save();
+					saveLoad.Save((int)num_CurrentIndex.Value);
 					break;
 				case Keys.F2:
 					manualInput.Apply();
@@ -146,7 +146,7 @@ namespace Selfie1
 
 		private void button_Save_Click(object sender, EventArgs e)
 		{
-			saveLoad.Save();
+			saveLoad.Save((int)num_CurrentIndex.Value);
 		}
 
 		private void saveToFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -170,7 +170,9 @@ namespace Selfie1
 
 		private void textBox_OutputFolder_TextChanged(object sender, EventArgs e)
 		{
-			saveLoad.SetOutputFolder(textBox_OutputFolder.Text);
+			bool success = saveLoad.SetOutputFolder(textBox_OutputFolder.Text);
+			icon_exlMark.Visible = !success;
 		}
+
 	}
 }
