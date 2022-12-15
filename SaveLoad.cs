@@ -52,23 +52,24 @@ namespace Selfie1
 
 		internal void Save(int index)
 		{
+			Logger.Log("--- Save ---");
+
 			if(!manualInput.IsInputValid)
 			{
-				Debug.WriteLine("Input is not valid");
+				Logger.Log("Input is not valid");
 				return;
 			}
 
 			if(jpegCodec == null)
 			{
-				Debug.WriteLine("no jpeg codec");
+				Logger.Log("no jpeg codec");
 				return;
 			}
 			if(!Directory.Exists(outputPath))
 			{
-				Debug.WriteLine($"path {outputPath} does not exist");
+				Logger.Log($"path {outputPath} does not exist");
 				return;
 			}
-
 
 
 			bool useFileName = textBox_OutputName.Text.Length == 0;
@@ -89,15 +90,17 @@ namespace Selfie1
 			manualInput.GetOutputBitmap().Save(outputFileFullName, jpegCodec, encoderParams);
 
 			OnSave.Invoke();
+
+			Logger.Log("--- Saved ---");
 		}
 
 		internal bool SetOutputFolder(string path)
 		{
-			Debug.WriteLine($"SetOutputFolder {path}");
+			Logger.Log($"SetOutputFolder {path}");
 
 			if(!Directory.Exists(path))
 			{
-				Debug.WriteLine($"path {path} does not exist");
+				Logger.Log($"path {path} does not exist");
 				outputPath = "";
 				return false;
 			}

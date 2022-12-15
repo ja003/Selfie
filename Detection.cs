@@ -38,12 +38,12 @@ namespace Selfie1
 
 				if(eyes.Length == 0)
 				{
-					Debug.WriteLine("no eye detected");
+					Logger.Log("no eye detected");
 					return result;
 				}
 				if(eyes.Length == 1)
 				{
-					Debug.WriteLine("only 1 eye detected");
+					Logger.Log("only 1 eye detected");
 					Rectangle tmpEye = eyes[0];
 					eyes = new Rectangle[2];
 					eyes[0] = tmpEye;
@@ -55,7 +55,7 @@ namespace Selfie1
 				}
 				else if(eyes.Length > 2)
 				{
-					Debug.WriteLine("too many eyes detected - " + eyes.Length);
+					Logger.Log("too many eyes detected - " + eyes.Length);
 				}
 				
 

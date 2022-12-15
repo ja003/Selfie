@@ -35,13 +35,13 @@ namespace Selfie1
 			manualInput = new ManualInput(visuals, detection);
 			saveLoad = new SaveLoad(manualInput, textBox_OutputName);
 			bulkInput = new BulkInputManager(manualInput, num_CurrentIndex);
+			Logger.Init(textBox_log);
 
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
 
 		private void Form1_KeyDown(object sender, KeyEventArgs e)
 		{
-			Debug.WriteLine(e.KeyCode);
 			switch(e.KeyCode)
 			{
 				case Keys.Space:
@@ -125,7 +125,7 @@ namespace Selfie1
 			if(mouseEventArgs != null)
 				manualInput.OnClick_Input(mouseEventArgs);
 			else
-				Debug.WriteLine("Invalid input");
+				Logger.Log("Invalid input");
 		}
 
 		private void button_Apply_Click(object sender, EventArgs e)
@@ -174,5 +174,9 @@ namespace Selfie1
 			icon_exlMark.Visible = !success;
 		}
 
+		private void textBox_log_TextChanged(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

@@ -98,7 +98,7 @@ namespace Selfie1
 						form.pictureBox_debug4b.Image = bitmap;
 					return;
 			}
-			Debug.WriteLine("Invalid SetDebug");
+			Logger.Log("Invalid SetDebug");
 		}
 
 		/// <summary>

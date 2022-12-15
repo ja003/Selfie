@@ -31,7 +31,7 @@ namespace Selfie1
 			if(!Directory.Exists(path))
 			{
 				manualInput.SetInputInvalid();
-				Debug.WriteLine($"path {path} does not exist");
+				Logger.Log($"path {path} does not exist");
 				return;
 			}
 			inputFolder = new DirectoryInfo(path);
@@ -39,7 +39,7 @@ namespace Selfie1
 			if(inputFolder.GetFiles().Length == 0)
 			{
 				manualInput.SetInputInvalid();
-				Debug.WriteLine($"there are no files");
+				Logger.Log($"there are no files");
 				return;
 			}
 
@@ -52,7 +52,7 @@ namespace Selfie1
 		{
 			if(!manualInput.IsInputValid)
 			{
-				Debug.WriteLine("dont ProcessNextFile");
+				Logger.Log("dont ProcessNextFile");
 				return;
 			}
 
@@ -60,7 +60,7 @@ namespace Selfie1
 
 			if(!ExistsNextFile())
 			{
-				Debug.WriteLine("no next file to process");
+				Logger.Log("no next file to process");
 				num_CurrentIndex.Value = -1;
 				manualInput.SetInput("");
 				return;

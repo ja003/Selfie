@@ -63,7 +63,7 @@ namespace Selfie1
 		{
 			IsInputValid = false;
 			visuals.SetInputImage(null);
-			Debug.WriteLine("SetInputInvalid");
+			Logger.Log("SetInputInvalid");
 		}
 
 		internal void SetInput(FileInfo file)
@@ -188,7 +188,7 @@ namespace Selfie1
 
 		internal void OnClick_Input(MouseEventArgs mouseEventArgs)
 		{
-			Debug.WriteLine($"{mouseEventArgs.X},{mouseEventArgs.Y}");
+			Logger.Log($"{mouseEventArgs.X},{mouseEventArgs.Y}");
 
 			bool isSetingLeft = visuals.IsOnInputPictureLeftSide(mouseEventArgs.X);
 			if(isSetingLeft)
@@ -208,6 +208,7 @@ namespace Selfie1
 		internal void ToggleMoveSpeed()
 		{
 			moveSpeed = moveSpeed > 1 ? 1 : 5;
+			Logger.Log("Toggle move speend: " + (moveSpeed > 1 ? "FAST" : "NORMAL"));
 		}
 
 		public void MoveInputLeftEye(int xDiff, int yDiff)
@@ -250,7 +251,7 @@ namespace Selfie1
 			}
 			else if(eye.GetRangeCenter(ref eyeCenter))
 			{
-				Debug.WriteLine("Eye detected but not pupil");
+				Logger.Log("Eye detected but not pupil");
 				if(isLeft)
 					SetInputLeftEye(eyeCenter.X, eyeCenter.Y, false);
 				else
@@ -258,7 +259,7 @@ namespace Selfie1
 			}
 			else
 			{
-				Debug.WriteLine("Eye not detected");
+				Logger.Log("Eye not detected");
 			}
 		}
 
@@ -320,8 +321,13 @@ namespace Selfie1
 
 		public void Apply()
 		{
+			Logger.Log("Apply");
+
 			if(!IsInputValid)
+			{
+				Logger.Log("Input not valid");
 				return;
+			}
 
 			ApplyTransform();
 
@@ -331,6 +337,8 @@ namespace Selfie1
 
 		private void ApplyTransform()
 		{
+			Logger.Log("Apply transform");
+
 			PointF thirdPointSrc = inputEyeRight;
 			thirdPointSrc.Y += 10; //todo: calculate orthogonal point?
 
@@ -348,9 +356,9 @@ namespace Selfie1
 			PointF[] src = new PointF[] { inputEyeLeft, inputEyeRight, thirdPointSrc };
 			PointF[] dest = new PointF[] { outputEyeLeft, outputEyeRight, thirdPointDest };
 
-			Debug.WriteLine($"src = [{inputEyeLeft},{inputEyeRight},{thirdPointSrc}]");
-			Debug.WriteLine($"dest = [{outputEyeLeft},{outputEyeRight},{thirdPointDest}]");
-			Debug.WriteLine($"dest = [{outputEyeLeft},{outputEyeRight},{thirdPointDest}]");
+			Logger.Log($"src = [{inputEyeLeft},{inputEyeRight},{thirdPointSrc}]");
+			Logger.Log($"dest = [{outputEyeLeft},{outputEyeRight},{thirdPointDest}]");
+			Logger.Log($"dest = [{outputEyeLeft},{outputEyeRight},{thirdPointDest}]");
 
 			//src = new PointF[] { new PointF(0, 0), new PointF(10, 0), new PointF(0, 10) };
 			//const int offset = 200;

@@ -60,7 +60,7 @@ namespace Selfie1
 			this.num_CurrentIndex = new System.Windows.Forms.NumericUpDown();
 			this.textBox_OutputName = new System.Windows.Forms.TextBox();
 			this.icon_exlMark = new System.Windows.Forms.PictureBox();
-			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.textBox_log = new System.Windows.Forms.RichTextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Input)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Output)).BeginInit();
 			this.menuStrip1.SuspendLayout();
@@ -342,20 +342,22 @@ namespace Selfie1
 			this.icon_exlMark.TabIndex = 27;
 			this.icon_exlMark.TabStop = false;
 			// 
-			// richTextBox1
+			// textBox_log
 			// 
-			this.richTextBox1.Location = new System.Drawing.Point(14, 642);
-			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(641, 168);
-			this.richTextBox1.TabIndex = 28;
-			this.richTextBox1.Text = "";
+			this.textBox_log.Location = new System.Drawing.Point(13, 642);
+			this.textBox_log.Name = "textBox_log";
+			this.textBox_log.ReadOnly = true;
+			this.textBox_log.Size = new System.Drawing.Size(642, 168);
+			this.textBox_log.TabIndex = 28;
+			this.textBox_log.Text = "";
+			this.textBox_log.TextChanged += new System.EventHandler(this.textBox_log_TextChanged);
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1322, 821);
-			this.Controls.Add(this.richTextBox1);
+			this.Controls.Add(this.textBox_log);
 			this.Controls.Add(this.icon_exlMark);
 			this.Controls.Add(this.textBox_OutputName);
 			this.Controls.Add(this.num_CurrentIndex);
@@ -432,7 +434,7 @@ namespace Selfie1
 		private System.Windows.Forms.ToolStripMenuItem sPACEApplySaveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem f1SaveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem f2ApplyToolStripMenuItem;
-		private System.Windows.Forms.RichTextBox richTextBox1;
+		private System.Windows.Forms.RichTextBox textBox_log;
 	}
 }
 
