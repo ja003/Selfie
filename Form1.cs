@@ -40,13 +40,24 @@ namespace Selfie1
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
 
+		bool isSpaceHit;
+
 		private void Form1_KeyDown(object sender, KeyEventArgs e)
 		{
 			switch(e.KeyCode)
 			{
 				case Keys.Space:
-					manualInput.Apply();
-					saveLoad.Save((int)num_CurrentIndex.Value);
+					if(isSpaceHit)
+					{
+						manualInput.Apply();
+						saveLoad.Save((int)num_CurrentIndex.Value);
+						isSpaceHit = false;
+					}
+					else
+					{
+						Logger.Log("hit space again");
+						isSpaceHit = true;
+					}
 					break;
 				case Keys.F1:
 					saveLoad.Save((int)num_CurrentIndex.Value);

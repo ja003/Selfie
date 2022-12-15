@@ -87,6 +87,17 @@ namespace Selfie1
 			}
 
 			string outputFileFullName = Path.Combine(outputPath, fileName);
+			if(File.Exists(outputFileFullName))
+			{
+
+				DialogResult dialogResult = MessageBox.Show($"File {outputFileFullName} already exists", "Do you want to owerwrite?", MessageBoxButtons.YesNo);
+				if(dialogResult == DialogResult.No)
+				{
+					Logger.Log("save canceled");
+					return;
+				}
+			}
+
 			manualInput.GetOutputBitmap().Save(outputFileFullName, jpegCodec, encoderParams);
 
 			OnSave.Invoke();
