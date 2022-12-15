@@ -170,7 +170,9 @@ namespace Selfie1
 
 		private void textBox_OutputFolder_TextChanged(object sender, EventArgs e)
 		{
-			saveLoad.SetOutputFolder(textBox_OutputFolder.Text);
+			bool success = saveLoad.SetOutputFolder(textBox_OutputFolder.Text);
+			icon_exlMark.Visible = !success;
 		}
+
 	}
 }

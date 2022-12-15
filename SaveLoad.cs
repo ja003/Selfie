@@ -91,20 +91,22 @@ namespace Selfie1
 			OnSave.Invoke();
 		}
 
-		internal void SetOutputFolder(string path)
+		internal bool SetOutputFolder(string path)
 		{
 			Debug.WriteLine($"SetOutputFolder {path}");
 
 			if(!Directory.Exists(path))
 			{
 				Debug.WriteLine($"path {path} does not exist");
-				return;
+				outputPath = "";
+				return false;
 			}
 
 			outputPath = path;
 
 			PropertyManager.OutputFolder = path;
 			Properties.Settings.Default["outputFolder"] = path;
+			return true;
 		}
 	}
 }
