@@ -40,23 +40,19 @@ namespace Selfie1
 			this.KeyDown += new KeyEventHandler(Form1_KeyDown);
 		}
 
-		bool isSpaceHit;
-
 		private void Form1_KeyDown(object sender, KeyEventArgs e)
 		{
 			switch(e.KeyCode)
 			{
 				case Keys.Space:
-					if(isSpaceHit)
+					if(manualInput.bHasInputChangedSinceApply)
 					{
 						manualInput.Apply();
-						saveLoad.Save((int)num_CurrentIndex.Value);
-						isSpaceHit = false;
+						Logger.Log("hit space again");
 					}
 					else
 					{
-						Logger.Log("hit space again");
-						isSpaceHit = true;
+						saveLoad.Save((int)num_CurrentIndex.Value);
 					}
 					break;
 				case Keys.F1:

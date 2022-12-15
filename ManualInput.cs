@@ -94,6 +94,7 @@ namespace Selfie1
 			SetInputEyes(eyes);
 			//SetInputEye(eyes.Item1, true);
 			//SetInputEye(eyes.Item2, false);
+			bHasInputChangedSinceApply = true;
 		}
 
 
@@ -263,6 +264,9 @@ namespace Selfie1
 			}
 		}
 
+		//if true, SPACE will Apply, else SAVE (so 2 SPACE hits are required)
+		public bool bHasInputChangedSinceApply = true;
+
 		private void SetInputLeftEye(int x, int y, bool convertFromPictureToImage)
 		{
 			if(convertFromPictureToImage)
@@ -290,6 +294,7 @@ namespace Selfie1
 		private void RefreshEyeVisuals()
 		{
 			visuals.RefreshEyeVisuals(inputImage, inputEyeLeft, inputEyeRight);
+			bHasInputChangedSinceApply = true;
 		}
 
 
@@ -333,6 +338,7 @@ namespace Selfie1
 
 			//visuals.SetOutputImage(outputImage.AsBitmap());
 			visuals.SetOuputImage(outputImage, outputEyeLeft, outputEyeRight);
+			bHasInputChangedSinceApply = false;
 		}
 
 		private void ApplyTransform()
